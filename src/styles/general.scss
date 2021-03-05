@@ -1,6 +1,38 @@
 @import "./functions";
 
+.button-primary {
+	background-color: color(app-primary);
+	border: 5px solid color(app-font);
+	border-radius: $border-radius;
+	width: 200px;
+	height: 3em;
+}
+
+.button-alt {
+	border: 5px solid color(app-font);
+	border-radius: $border-radius;
+	width: 200px;
+	height: 3em;
+}
+
+.input-primary {
+	background-color: color(app-gray);
+	border: 5px solid color(app-font);
+	border-radius: $border-radius;
+	width: 500px;
+	height: 3em;
+}
+
 button {
+	outline: 0;
+
+	&:focus {
+		outline: 0;
+	}
+}
+
+input {
+	padding: 0 2em 0 1em;
 	outline: 0;
 
 	&:focus {

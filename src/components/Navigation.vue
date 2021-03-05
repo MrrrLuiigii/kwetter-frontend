@@ -16,9 +16,13 @@
 			</button>
 		</div>
 
-		<!--  -->
-
-		<v-navigation-drawer class="drawer" v-model="drawer" absolute temporary>
+		<v-navigation-drawer
+			class="drawer"
+			v-model="drawer"
+			absolute
+			temporary
+			right
+		>
 		</v-navigation-drawer>
 	</div>
 </template>
@@ -51,8 +55,8 @@ export default class Navigation extends Vue {
 
 .navActions {
 	position: absolute;
-	bottom: 1em;
-	left: 1em;
+	top: 1em;
+	right: 1em;
 
 	&__button {
 		margin-right: 0.5em;
@@ -62,8 +66,7 @@ export default class Navigation extends Vue {
 .drawer {
 	background-color: color(primary);
 	border: 2px solid color(font);
-	border-left: none;
-	border-radius: 0 10px 10px 0;
+	// border-radius: $border-radius;
 }
 
 .router-link {

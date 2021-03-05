@@ -24,6 +24,7 @@ export default class App extends Vue {}
 </script>
 
 <style lang="scss">
+@import "@/styles/general";
 body {
 	overflow: hidden;
 	-ms-overflow-style: none;
@@ -36,9 +37,10 @@ body {
 	margin: 0;
 	text-align: center;
 	overflow: hidden;
-	// font-family: "SuperMunchkin";
-	color: color(font);
-	background-color: color(primary-dark);
+	font-family: "Segoe Script";
+	font-weight: 600;
+	color: color(app-font);
+	background-color: color(app-background);
 
 	-webkit-touch-callout: none; // iOS Safari
 	-webkit-user-select: none; // Safari

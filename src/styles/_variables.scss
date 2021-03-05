@@ -9,12 +9,11 @@ $screenHeight: (
 );
 
 $colors: (
-	primary: #f6f1df,
-	primary-dark: #ffd09a,
-	font: #000000,
-	subtle: #727272,
-	warning: #b20000,
-	succes: #00640f
+	app-primary: #4b88a2,
+	app-background: #fff9fb,
+	app-font: #252627,
+	app-accent: #bb0a21,
+	app-gray: #d3d4d9
 );
 
-$border-radius: 10px;
+$border-radius: 50px 0 50px 50px;
