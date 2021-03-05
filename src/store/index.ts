@@ -6,9 +6,6 @@ import SecureLS from "secure-ls";
 const ls = new SecureLS({ encodingType: "aes", isCompression: false });
 
 //modules
-import userModule from "./userModule";
-import lobbyModule from "./lobbyModule";
-import battleModule from "./battleModule";
 
 Vue.use(Vuex);
 
@@ -22,9 +19,5 @@ export default new Vuex.Store({
 			}
 		})
 	],
-	modules: {
-		userModule,
-		lobbyModule,
-		battleModule
-	}
+	modules: {}
 });

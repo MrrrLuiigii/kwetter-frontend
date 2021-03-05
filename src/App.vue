@@ -10,13 +10,12 @@ import { Component, Vue } from "vue-property-decorator";
 @Component({
 	metaInfo: {
 		meta: [
-			{ name: "title", content: "MunchKing" },
+			{ name: "title", content: "Kwetter" },
 			{
 				name: "description",
-				content:
-					"MunchKing is there for you to keep track of your Munchkin games. Keep a nice and simple overview of the game to improve your winning chances!"
+				content: "Kwetter is a social media platform!"
 			},
-			{ name: "keywords", content: "MunchKing, Munchkin, Game, Overview" },
+			{ name: "keywords", content: "Kwetter, social-media" },
 			{ name: "author", content: "MrrrLuiigii" }
 		]
 	}
@@ -37,7 +36,7 @@ body {
 	margin: 0;
 	text-align: center;
 	overflow: hidden;
-	font-family: "SuperMunchkin";
+	// font-family: "SuperMunchkin";
 	color: color(font);
 	background-color: color(primary-dark);
 
@@ -49,10 +48,10 @@ body {
 	user-select: none; // Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox
 }
 
-@font-face {
-	font-family: "SuperMunchkin";
-	src: url("./assets/font/Quasimodo Regular.ttf");
-}
+// @font-face {
+// 	font-family: "SuperMunchkin";
+// 	src: url("./assets/font/Quasimodo Regular.ttf");
+// }
 
 ::-webkit-scrollbar {
 	display: none;
