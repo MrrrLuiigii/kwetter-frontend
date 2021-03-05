@@ -1,0 +1,23 @@
+@mixin tablet {
+  @media (min-width: #{screenWidth(medium)}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{screenWidth(large)}) {
+    @content;
+  }
+}
+
+@mixin smallScreen {
+  @media (max-height: #{screenHeight(small)}) {
+    @content;
+  }
+}
+
+@mixin largeScreen {
+  @media (min-height: #{screenHeight(large)}) {
+    @content;
+  }
+}

@@ -1,0 +1,56 @@
+{
+	"name": "munchking",
+	"version": "0.1.0",
+	"private": true,
+	"scripts": {
+		"serve": "vue-cli-service serve",
+		"build": "vue-cli-service build",
+		"lint": "vue-cli-service lint"
+	},
+	"dependencies": {
+		"@fortawesome/fontawesome-svg-core": "^1.2.32",
+		"@fortawesome/free-brands-svg-icons": "^5.15.1",
+		"@fortawesome/free-regular-svg-icons": "^5.15.1",
+		"@fortawesome/free-solid-svg-icons": "^5.15.1",
+		"@fortawesome/vue-fontawesome": "^0.1.10",
+		"axios": "^0.19.2",
+		"core-js": "^3.7.0",
+		"dotenv": "^8.2.0",
+		"envalid": "^6.0.1",
+		"firebase": "^7.24.0",
+		"register-service-worker": "^1.7.1",
+		"secure-ls": "^1.2.6",
+		"socket.io-client": "^2.3.1",
+		"vue": "^2.6.12",
+		"vue-class-component": "^7.2.6",
+		"vue-meta": "^2.4.0",
+		"vue-property-decorator": "^8.5.1",
+		"vue-router": "^3.4.9",
+		"vue-socket.io-extended": "^4.0.5",
+		"vue-toasted": "^1.1.27",
+		"vuetify": "^2.3.16",
+		"vuex": "^3.5.1",
+		"vuex-persistedstate": "^3.1.0"
+	},
+	"devDependencies": {
+		"@vue/cli-plugin-babel": "^4.5.8",
+		"@vue/cli-plugin-eslint": "^4.5.8",
+		"@vue/cli-plugin-pwa": "^4.5.8",
+		"@vue/cli-plugin-typescript": "^4.5.8",
+		"@vue/cli-service": "^4.5.8",
+		"@vue/eslint-config-prettier": "^5.0.0",
+		"@vue/eslint-config-typescript": "^4.0.0",
+		"eslint": "^5.16.0",
+		"eslint-plugin-prettier": "^3.1.4",
+		"eslint-plugin-vue": "^5.0.0",
+		"node-sass": "^4.13.1",
+		"prettier": "^1.19.1",
+		"sass-loader": "^8.0.2",
+		"typescript": "~3.5.3",
+		"vue-template-compiler": "^2.6.12",
+		"webpack": "^4.44.2"
+	},
+	"engines": {
+		"node": "12.x"
+	}
+}

@@ -1,0 +1,75 @@
+@import "./functions";
+
+.squareButton {
+	width: 50px;
+	height: 50px;
+	outline: none;
+	border: 2px solid color(font);
+	border-radius: 10px;
+	background-color: color(primary);
+}
+
+.squareButtonSmall {
+	width: 25px;
+	height: 25px;
+	outline: none;
+	border: 2px solid color(font);
+	border-radius: 10px;
+	background-color: color(primary);
+}
+
+.rectangleButton {
+	width: 180px;
+	height: 50px;
+	outline: none;
+	border: 2px solid color(font);
+	border-radius: 10px;
+	background-color: color(primary);
+}
+
+.rectangleInput {
+	width: 270px;
+	height: 50px;
+	text-align: center;
+	outline: none;
+	border: 2px solid color(font);
+	border-radius: 10px;
+	background-color: color(primary);
+}
+
+.fa-icon {
+	font-size: 1.5em;
+	justify-self: center;
+	align-self: center;
+	margin-top: 0.25em;
+}
+
+.underlineAccent {
+	background-image: linear-gradient(color(primary-dark), color(primary-dark));
+	background-size: 75% 0.8em;
+	background-position: right bottom;
+}
+
+button {
+	outline: 0;
+
+	&:focus {
+		outline: 0;
+	}
+}
+
+select {
+	outline: 0;
+
+	&:focus {
+		outline: 0;
+	}
+}
+
+// .succes {
+// 	color: color(succes);
+// }
+
+// .warning {
+// 	color: color(warning);
+// }
