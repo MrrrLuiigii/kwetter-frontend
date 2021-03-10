@@ -1,15 +1,23 @@
 <template>
-	<div class="login">
+	<div class="register">
 		<h1>Sign up to Kwetter</h1>
 		<div>
-			<input class="input-primary" type="text" placeholder="Username..." />
-		</div>
-		<div>
-			<input class="input-primary" type="password" placeholder="Password..." />
+			<input
+				class="input-primary passManager"
+				type="text"
+				placeholder="Username..."
+			/>
 		</div>
 		<div>
 			<input
-				class="input-primary"
+				class="input-primary passManager"
+				type="password"
+				placeholder="Password..."
+			/>
+		</div>
+		<div>
+			<input
+				class="input-primary passManager"
 				type="password"
 				placeholder="Repeat password..."
 			/>
@@ -29,17 +37,17 @@ export default class Register extends Vue {}
 <style lang="scss" scoped>
 @import "@/styles/general";
 
-.login {
+.register {
 	text-align: right;
 	margin-right: 10vw;
 }
 
-.login div input,
+.register div input,
 button {
 	margin: 0.5em;
 }
 
-.login h1 {
+.register h1 {
 	font-size: 3vw;
 }
 </style>

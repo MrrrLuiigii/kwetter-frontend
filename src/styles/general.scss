@@ -31,8 +31,22 @@ button {
 	}
 }
 
+textarea {
+	padding: 0.5em 1em 0 1em;
+	outline: 0;
+	resize: none;
+
+	&:focus {
+		outline: 0;
+	}
+}
+
+.passManager {
+	padding-right: 2em;
+}
+
 input {
-	padding: 0 2em 0 1em;
+	padding: 0 1em 0 1em;
 	outline: 0;
 
 	&:focus {

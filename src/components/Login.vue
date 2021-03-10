@@ -2,10 +2,18 @@
 	<div class="login">
 		<h1>Login to Kwetter</h1>
 		<div>
-			<input class="input-primary" type="text" placeholder="Username..." />
+			<input
+				class="input-primary passManager"
+				type="text"
+				placeholder="Username..."
+			/>
 		</div>
 		<div>
-			<input class="input-primary" type="password" placeholder="Password..." />
+			<input
+				class="input-primary passManager"
+				type="password"
+				placeholder="Password..."
+			/>
 		</div>
 		<div><button class="button-alt">Login</button></div>
 	</div>
