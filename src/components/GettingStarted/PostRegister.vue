@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import FeatherBackground from "../components/FeatherBackground.vue";
+import FeatherBackground from "../FeatherBackground.vue";
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component({ components: { FeatherBackground } })
@@ -33,9 +33,8 @@ export default class PostRegister extends Vue {
 	@Prop()
 	propUsername!: string;
 
-	//TODO: remove default MrrrLuiigii
 	get username() {
-		return this.propUsername ? this.propUsername : "MrrrLuiigii";
+		return this.propUsername;
 	}
 }
 </script>

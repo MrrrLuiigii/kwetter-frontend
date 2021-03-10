@@ -1,17 +1,25 @@
 <template>
 	<div class="flex">
 		<div class="buttons">
-			<button class="button-alt button-login" @click="landingPageType = 1">
+			<button
+				v-if="landingPageType === 0 || landingPageType === 2"
+				class="button-alt button-login"
+				@click="landingPageType = 1"
+			>
 				Login
 			</button>
-			<button class="button-primary button-signup" @click="landingPageType = 2">
+			<button
+				v-if="landingPageType === 0 || landingPageType === 1"
+				class="button-primary button-signup"
+				@click="landingPageType = 2"
+			>
 				Sign up
 			</button>
 		</div>
 		<GettingStarted v-if="pageType === 0" />
 		<Login v-else-if="pageType === 1" />
-		<Register v-else-if="pageType === 2" />
-		<PostRegister v-else-if="pageType === 3" />
+		<Register @registered="register" v-else-if="pageType === 2" />
+		<PostRegister :propUsername="username" v-else-if="pageType === 3" />
 		<FeatherBackground />
 	</div>
 </template>
@@ -24,10 +32,10 @@ import LandingPageType from "../models/enums/LandingPageType";
 
 //components
 import FeatherBackground from "../components/FeatherBackground.vue";
-import GettingStarted from "../components/GettingStarted.vue";
-import Login from "../components/Login.vue";
-import Register from "../components/Register.vue";
-import PostRegister from "../components/PostRegister.vue";
+import GettingStarted from "../components/GettingStarted/GettingStarted.vue";
+import Login from "../components/GettingStarted/Login.vue";
+import Register from "../components/GettingStarted/Register.vue";
+import PostRegister from "../components/GettingStarted/PostRegister.vue";
 
 @Component({
 	components: {
@@ -39,14 +47,25 @@ import PostRegister from "../components/PostRegister.vue";
 	}
 })
 export default class LandingsView extends Vue {
-	private landingPageType: LandingPageType = LandingPageType.PostRegister;
-
+	private landingPageType: LandingPageType = LandingPageType.GettingStarted;
 	get pageType() {
 		return this.landingPageType;
 	}
-
 	set pageType(pageType: LandingPageType) {
 		this.landingPageType = pageType;
+	}
+
+	private propUsername: string = "";
+	get username(): string {
+		return this.propUsername;
+	}
+	set username(username) {
+		this.propUsername = username;
+	}
+
+	register(username: string) {
+		this.username = username;
+		this.pageType = LandingPageType.PostRegister;
 	}
 }
 </script>

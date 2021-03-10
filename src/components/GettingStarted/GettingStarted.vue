@@ -5,7 +5,7 @@
 		<div class="getting-started__img">
 			<img
 				class="getting-started__img"
-				src="../assets/images/chat-balloons.svg"
+				src="../../assets/images/chat-balloons.svg"
 				alt="Chat balloons"
 			/>
 		</div>
@@ -13,7 +13,7 @@
 </template>
 
 <script lang="ts">
-import FeatherBackground from "../components/FeatherBackground.vue";
+import FeatherBackground from "../FeatherBackground.vue";
 import { Component, Vue } from "vue-property-decorator";
 
 @Component({ components: { FeatherBackground } })

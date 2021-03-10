@@ -20,7 +20,7 @@
 </template>
 
 <script lang="ts">
-import FeatherBackground from "../components/FeatherBackground.vue";
+import FeatherBackground from "../FeatherBackground.vue";
 import { Component, Vue } from "vue-property-decorator";
 
 @Component({ components: { FeatherBackground } })

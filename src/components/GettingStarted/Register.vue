@@ -22,16 +22,20 @@
 				placeholder="Repeat password..."
 			/>
 		</div>
-		<div><button class="button-primary">Sign up</button></div>
+		<div><button class="button-primary" @click="register">Sign up</button></div>
 	</div>
 </template>
 
 <script lang="ts">
-import FeatherBackground from "../components/FeatherBackground.vue";
+import FeatherBackground from "../FeatherBackground.vue";
 import { Component, Vue } from "vue-property-decorator";
 
 @Component({ components: { FeatherBackground } })
-export default class Register extends Vue {}
+export default class Register extends Vue {
+	register() {
+		this.$emit("registered", "MrrrLuiigii");
+	}
+}
 </script>
 
 <style lang="scss" scoped>
