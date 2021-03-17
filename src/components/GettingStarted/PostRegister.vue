@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import FeatherBackground from "../FeatherBackground.vue";
+import FeatherBackground from "@/components/FeatherBackground.vue";
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component({ components: { FeatherBackground } })
