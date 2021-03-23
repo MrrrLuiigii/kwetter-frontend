@@ -1,9 +1,13 @@
 import axios, { AxiosResponse, AxiosError } from "axios";
-import "firebase/auth";
+import { StatusCodes } from "http-status-codes";
+import BadRequestException from "./exceptions/badRequest.exception";
+import HttpException from "./exceptions/httpException";
+import InternalServerException from "./exceptions/internalServer.exception";
+import UnauthorizedException from "./exceptions/unauthorized.exception";
 
 class AxiosRequestHandler {
 	private static api = axios.create({
-		baseURL: process.env.VUE_APP_API_HOST
+		baseURL: process.env.VUE_APP_GATEWAY_HOST
 	});
 
 	public static get(url: string): any {
@@ -34,9 +38,7 @@ class AxiosRequestHandler {
 				return res;
 			})
 			.catch((err: AxiosError) => {
-				if (err.response) {
-					return err.response;
-				}
+				throw this.checkStatusCode(err);
 			});
 	}
 
@@ -73,6 +75,18 @@ class AxiosRequestHandler {
 					return err.response;
 				}
 			});
+	}
+
+	private static checkStatusCode(err: AxiosError<any>): HttpException {
+		const message: string = err.response.data.message;
+		switch (err.response.status) {
+			case StatusCodes.UNAUTHORIZED:
+				return new UnauthorizedException(message);
+			case StatusCodes.BAD_REQUEST:
+				return new BadRequestException(message);
+			case StatusCodes.INTERNAL_SERVER_ERROR:
+				return new InternalServerException(message);
+		}
 	}
 }
 

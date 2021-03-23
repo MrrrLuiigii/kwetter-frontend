@@ -65,7 +65,7 @@ export default class LandingsView extends Vue {
 
 	register(username: string) {
 		this.username = username;
-		this.pageType = LandingPageType.PostRegister;
+		// this.pageType = LandingPageType.PostRegister;
 	}
 }
 </script>

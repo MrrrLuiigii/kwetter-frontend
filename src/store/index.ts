@@ -6,6 +6,7 @@ import SecureLS from "secure-ls";
 const ls = new SecureLS({ encodingType: "aes", isCompression: false });
 
 //modules
+import authModule from "./authModule";
 
 Vue.use(Vuex);
 
@@ -19,5 +20,5 @@ export default new Vuex.Store({
 			}
 		})
 	],
-	modules: {}
+	modules: { authModule }
 });

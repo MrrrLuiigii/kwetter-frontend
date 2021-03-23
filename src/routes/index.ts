@@ -3,6 +3,7 @@ import Router from "vue-router";
 import store from "@/store";
 
 import LandingsView from "@/views/LandingsView.vue";
+import HomeView from "@/views/HomeView.vue";
 
 Vue.use(Router);
 
@@ -15,6 +16,15 @@ const router = new Router({
 			component: LandingsView,
 			meta: {
 				title: "Landingspage - Kwetter"
+			}
+		},
+		{
+			path: "/home",
+			name: "Home",
+			component: HomeView,
+			meta: {
+				title: "Home - Kwetter",
+				requiresAuth: true
 			}
 		}
 		// {
@@ -32,14 +42,14 @@ const router = new Router({
 /**
  * Router authorisation
  */
-// router.beforeEach((to, from, next) => {
-// 	const loggedInUser = store.getters.getLoggedInUser;
-// 	const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
+router.beforeEach((to, from, next) => {
+	const user = store.getters.getUser;
+	const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
-// 	if (requiresAuth && !loggedInUser) next({ name: "Login" });
-// 	else if (!requiresAuth && !!loggedInUser) next({ name: "Lobby" });
-// 	else next();
-// });
+	if (requiresAuth && !user) next({ name: "Landingspage" });
+	else if (!requiresAuth && !!user) next({ name: "Home" });
+	else next();
+});
 
 router.beforeEach((to, from, next) => {
 	// This goes through the matched routes from last to first, finding the closest route with a title.
@@ -47,17 +57,17 @@ router.beforeEach((to, from, next) => {
 	const nearestWithTitle = to.matched
 		.slice()
 		.reverse()
-		.find((r) => r.meta && r.meta.title);
+		.find(r => r.meta && r.meta.title);
 
 	// Find the nearest route element with meta tags.
 	const nearestWithMeta = to.matched
 		.slice()
 		.reverse()
-		.find((r) => r.meta && r.meta.metaTags);
+		.find(r => r.meta && r.meta.metaTags);
 	const previousNearestWithMeta = from.matched
 		.slice()
 		.reverse()
-		.find((r) => r.meta && r.meta.metaTags);
+		.find(r => r.meta && r.meta.metaTags);
 
 	// If a route with a title was found, set the document (page) title to that value.
 	if (nearestWithTitle) document.title = nearestWithTitle.meta.title;
@@ -65,7 +75,7 @@ router.beforeEach((to, from, next) => {
 	// Remove any stale meta tags from the document using the key attribute we set below.
 	Array.from(
 		document.querySelectorAll("[data-vue-router-controlled]")
-	).map((el) => el.parentNode!.removeChild(el));
+	).map(el => el.parentNode!.removeChild(el));
 
 	// Skip rendering meta tags if there are none.
 	if (!nearestWithMeta) return next();
@@ -75,7 +85,7 @@ router.beforeEach((to, from, next) => {
 		.map((tagDef: { [x: string]: string }) => {
 			const tag = document.createElement("meta");
 
-			Object.keys(tagDef).forEach((key) => {
+			Object.keys(tagDef).forEach(key => {
 				tag.setAttribute(key, tagDef[key]);
 			});
 
