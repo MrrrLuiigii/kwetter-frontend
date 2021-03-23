@@ -28,14 +28,14 @@
 import { Component, Vue } from "vue-property-decorator";
 
 //enum
-import LandingPageType from "../models/enums/LandingPageType";
+import LandingPageType from "@/models/enums/LandingPageType";
 
 //components
-import FeatherBackground from "../components/FeatherBackground.vue";
-import GettingStarted from "../components/GettingStarted/GettingStarted.vue";
-import Login from "../components/GettingStarted/Login.vue";
-import Register from "../components/GettingStarted/Register.vue";
-import PostRegister from "../components/GettingStarted/PostRegister.vue";
+import FeatherBackground from "@/components/FeatherBackground.vue";
+import GettingStarted from "@/components/GettingStarted/GettingStarted.vue";
+import Login from "@/components/GettingStarted/Login.vue";
+import Register from "@/components/GettingStarted/Register.vue";
+import PostRegister from "@/components/GettingStarted/PostRegister.vue";
 
 @Component({
 	components: {

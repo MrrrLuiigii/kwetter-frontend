@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import FeatherBackground from "../FeatherBackground.vue";
+import FeatherBackground from "@/components/FeatherBackground.vue";
 import { Component, Vue } from "vue-property-decorator";
 import { RegisterRequest } from "@/models/dto/auth.dto";
 import AuthService from "@/services/authService";

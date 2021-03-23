@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import FeatherBackground from "../FeatherBackground.vue";
+import FeatherBackground from "@/components/FeatherBackground.vue";
 import { Component, Vue } from "vue-property-decorator";
 import AuthService from "@/services/authService";
 import { LoginRequest } from "@/models/dto/auth.dto";
