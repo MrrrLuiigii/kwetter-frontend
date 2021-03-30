@@ -12,11 +12,7 @@ class AxiosRequestHandler {
 
 	public static get(url: string): any {
 		return this.api
-			.get(url, {
-				// headers: {
-				// 	Authorization: token
-				// }
-			})
+			.get(url)
 			.then((res: AxiosResponse) => {
 				return res;
 			})
@@ -29,11 +25,7 @@ class AxiosRequestHandler {
 
 	public static post(url: string, object: any): any {
 		return this.api
-			.post(url, object, {
-				// headers: {
-				// 	Authorization: token
-				// }
-			})
+			.post(url, object)
 			.then((res: AxiosResponse) => {
 				return res;
 			})
@@ -44,11 +36,7 @@ class AxiosRequestHandler {
 
 	public static put(url: string, object: any): any {
 		return this.api
-			.put(url, object, {
-				// headers: {
-				// 	Authorization: token
-				// }
-			})
+			.put(url, object)
 			.then((res: AxiosResponse) => {
 				return res;
 			})
@@ -63,9 +51,6 @@ class AxiosRequestHandler {
 		return this.api
 			.delete(url, {
 				data: object
-				// headers: {
-				// 	Authorization: token
-				// }
 			})
 			.then((res: AxiosResponse) => {
 				return res;

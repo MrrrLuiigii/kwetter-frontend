@@ -1,8 +1,7 @@
 <template>
 	<div>
 		<Navigation />
-		WELKOM OP DE HOME PAGINA,
-		{{ user.username }}!
+		WELKOM OP DE PROFIEL PAGINA!
 	</div>
 </template>
 
@@ -12,16 +11,10 @@ import { Component, Vue } from "vue-property-decorator";
 //components
 import Navigation from "@/components/Navigation.vue";
 
-import AuthVM from "@/models/auth.viewmodel";
-
 @Component({
 	components: { Navigation }
 })
-export default class HomeView extends Vue {
-	get user(): AuthVM {
-		return this.$store.getters.getUser;
-	}
-}
+export default class ProfileView extends Vue {}
 </script>
 
 <style lang="scss" scoped>

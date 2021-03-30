@@ -4,6 +4,7 @@ import store from "@/store";
 
 import LandingsView from "@/views/LandingsView.vue";
 import HomeView from "@/views/HomeView.vue";
+import ProfileView from "@/views/ProfileView.vue";
 
 Vue.use(Router);
 
@@ -21,21 +22,23 @@ const router = new Router({
 		{
 			path: "/home",
 			name: "Home",
-			component: HomeView,
+			component: () =>
+				import(/* webpackChunkName: "Home" */ "../views/HomeView.vue"),
 			meta: {
 				title: "Home - Kwetter",
 				requiresAuth: true
 			}
+		},
+		{
+			path: "/profile",
+			name: "Profile",
+			component: () =>
+				import(/* webpackChunkName: "Profile" */ "../views/ProfileView.vue"),
+			meta: {
+				title: "Profile - Kwetter",
+				requiresAuth: true
+			}
 		}
-		// {
-		// 	path: "/register",
-		// 	name: "Register",
-		// 	component: () =>
-		// 		import(/* webpackChunkName: "Register" */ "../views/RegisterView.vue"),
-		// 	meta: {
-		// 		title: "Register - MunchKing"
-		// 	}
-		// },
 	]
 });
 

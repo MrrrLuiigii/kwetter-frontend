@@ -16,7 +16,11 @@ import VueMeta from "vue-meta";
 
 //font-awesome
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faBars, faFeatherAlt } from "@fortawesome/free-solid-svg-icons";
+import {
+	faBars,
+	faFeatherAlt,
+	faUser
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 //env variables
@@ -29,7 +33,7 @@ Vue.use(VueMeta, {
 	refreshOnceOnNavigation: true
 });
 
-library.add(faBars, faFeatherAlt);
+library.add(faBars, faFeatherAlt, faUser);
 Vue.component("fa-icon", FontAwesomeIcon);
 
 const nodeEnv: "development" | "production" =
