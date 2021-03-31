@@ -3,6 +3,7 @@ import Router from "vue-router";
 import store from "@/store";
 
 import LandingsView from "@/views/LandingsView.vue";
+import { AccountStatus } from "@/models/enums/auth.enum";
 
 Vue.use(Router);
 
@@ -57,7 +58,9 @@ router.beforeEach((to, from, next) => {
 	const user = store.getters.getUser;
 	const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
-	if (requiresAuth && !user) next({ name: "Landingspage" });
+	if (to.name === "Verify" && user.status !== AccountStatus.Pending)
+		next({ name: from.name ? from.name : "Home" });
+	else if (requiresAuth && !user) next({ name: "Landingspage" });
 	else if (!requiresAuth && !!user) next({ name: "Home" });
 	else next();
 });

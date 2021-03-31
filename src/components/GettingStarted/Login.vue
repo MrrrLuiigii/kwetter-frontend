@@ -4,6 +4,8 @@
 		<p v-if="error !== ''" class="errorMsg">{{ error }}</p>
 		<div>
 			<input
+				v-focus
+				@keypress.enter="login"
 				v-model.trim="loginRequest.username"
 				class="input-primary passManager"
 				type="text"
@@ -12,13 +14,18 @@
 		</div>
 		<div>
 			<input
+				@keypress.enter="login"
 				v-model.trim="loginRequest.password"
 				class="input-primary passManager"
 				type="password"
 				placeholder="Password..."
 			/>
 		</div>
-		<div><button class="button-alt" @click="login">Login</button></div>
+		<div>
+			<button class="button-alt" @click="login">
+				Login
+			</button>
+		</div>
 	</div>
 </template>
 
@@ -46,7 +53,7 @@ export default class Login extends Vue {
 		AuthService.login(this.loginRequest)
 			.then((res: any) => {
 				this.error = "";
-				// this.$router.replace("Home");
+				this.$router.replace({ name: "Home" });
 			})
 			.catch((err: { message: string }) => {
 				this.error = err.message || "Whoops... Something went wrong...";

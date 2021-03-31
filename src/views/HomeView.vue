@@ -1,6 +1,7 @@
 <template>
-	<div>
+	<div v-if="user">
 		<Navigation />
+
 		WELKOM OP DE HOME PAGINA,
 		{{ user.username }}!
 	</div>

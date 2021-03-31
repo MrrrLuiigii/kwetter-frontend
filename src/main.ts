@@ -19,6 +19,7 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import {
 	faBars,
 	faFeatherAlt,
+	faSignOutAlt,
 	faUser
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -33,7 +34,7 @@ Vue.use(VueMeta, {
 	refreshOnceOnNavigation: true
 });
 
-library.add(faBars, faFeatherAlt, faUser);
+library.add(faBars, faFeatherAlt, faUser, faSignOutAlt);
 Vue.component("fa-icon", FontAwesomeIcon);
 
 const nodeEnv: "development" | "production" =
@@ -43,6 +44,13 @@ if (nodeEnv === "development") {
 }
 
 Vue.config.productionTip = false;
+
+// Register a global custom directive called v-focus
+Vue.directive("focus", {
+	inserted: function(el) {
+		el.focus();
+	}
+});
 
 const app = "";
 

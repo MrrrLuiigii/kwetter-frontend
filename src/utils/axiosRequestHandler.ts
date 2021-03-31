@@ -10,7 +10,7 @@ class AxiosRequestHandler {
 	private static api = axios.create({
 		baseURL: process.env.VUE_APP_GATEWAY_HOST,
 		headers: {
-			Authorization: store.getters.getUser.token
+			Authorization: store.getters.getUser ? store.getters.getUser.token : ""
 		}
 	});
 
@@ -53,7 +53,7 @@ class AxiosRequestHandler {
 
 	public static patch(url: string, object: any): any {
 		return this.api
-			.put(url, object)
+			.patch(url, object)
 			.then((res: AxiosResponse) => {
 				return res;
 			})

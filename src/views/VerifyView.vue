@@ -3,6 +3,10 @@
 		<Navigation />
 		Your account has been verified
 		{{ user.username }}!
+
+		<div>
+			Proceed to <router-link :to="{ name: 'Home' }">Home</router-link>!
+		</div>
 	</div>
 </template>
 
@@ -27,18 +31,12 @@ export default class VerifyView extends Vue {
 	}
 
 	created() {
-		if (
-			this.$route.query.token &&
-			this.$route.query.token === this.user.token
-		) {
-			AuthService.verify(this.user.token)
-				.then(() => {
-					console.log("VERIFIED");
-					//TODO: route to home page
-				})
-				.catch(err => {});
+		console.log("created");
 
-			//TODO: verify the token and set account status to active in api
+		if (this.$route.query.token) {
+			AuthService.verify().catch((err: any) => {
+				//TODO: show error with verify
+			});
 		}
 	}
 }

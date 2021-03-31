@@ -4,7 +4,12 @@
 		<p>Complete your profile with the following information...</p>
 		<div class="postRegister__inputs">
 			<div>
-				<input class="input-primary" type="text" placeholder="Full name..." />
+				<input
+					v-focus
+					class="input-primary"
+					type="text"
+					placeholder="Full name..."
+				/>
 			</div>
 			<div>
 				<input class="input-primary" type="text" placeholder="Place..." />

@@ -34,8 +34,10 @@ class AuthService {
 			});
 	}
 
-	public static verify(token: string) {
+	public static verify() {
 		const url: string = "auth/verify";
+
+		console.log("service");
 
 		return AxiosRequestHandler.patch(url, {})
 			.then((res: AxiosResponse) => {

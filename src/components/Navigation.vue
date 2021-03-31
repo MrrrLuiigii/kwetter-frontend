@@ -35,13 +35,14 @@
 			absolute
 			temporary
 			right
+			width="14vw"
 		>
 			<div class="user">
 				<div class="user__icon">
 					<fa-icon :icon="['fas', 'user']" />
 				</div>
 				<div class="user__username">
-					{{ user.username }}
+					{{ user ? user.username : "" }}
 				</div>
 			</div>
 
@@ -52,14 +53,19 @@
 				</ul>
 			</div>
 
+			<div class="menu">
+				<button class="menu__logout" @click="logout">
+					<fa-icon :icon="['fas', 'sign-out-alt']" />
+				</button>
+			</div>
+
 			<v-divider class="drawer__divider"></v-divider>
 		</v-navigation-drawer>
 	</div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
-import { Route } from "vue-router";
+import { Component, Vue } from "vue-property-decorator";
 
 //viewmodels
 import AuthVM from "@/models/auth.viewmodel";
@@ -70,6 +76,11 @@ export default class Navigation extends Vue {
 
 	get user(): AuthVM {
 		return this.$store.getters.getUser;
+	}
+
+	logout() {
+		this.$store.dispatch("logout");
+		this.$router.replace({ name: "Landingspage" });
 	}
 }
 </script>
@@ -92,9 +103,6 @@ export default class Navigation extends Vue {
 			width: 85vw;
 			height: 7.5vh;
 			background-color: color(app-primary);
-
-			border: 0 solid black;
-			border-radius: 0 0 100px 0;
 
 			&__title {
 				padding: 1em;
@@ -149,8 +157,8 @@ export default class Navigation extends Vue {
 
 .drawer {
 	background-color: color(primary);
-	border: 2px solid color(font);
-	// border-radius: $border-radius;
+	border-left: 2px solid color(font);
+	max-width: 20em;
 }
 
 .user {

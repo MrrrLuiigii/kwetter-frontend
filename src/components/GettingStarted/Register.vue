@@ -4,6 +4,8 @@
 		<p v-if="error !== ''" class="errorMsg">{{ error }}</p>
 		<div>
 			<input
+				@keypress.enter="register"
+				v-focus
 				v-model="registerRequest.username"
 				class="input-primary passManager"
 				type="text"
@@ -12,6 +14,7 @@
 		</div>
 		<div>
 			<input
+				@keypress.enter="register"
 				v-model="registerRequest.email"
 				class="input-primary passManager"
 				type="text"
@@ -20,6 +23,7 @@
 		</div>
 		<div>
 			<input
+				@keypress.enter="register"
 				v-model="registerRequest.password"
 				class="input-primary passManager"
 				type="password"
@@ -28,6 +32,7 @@
 		</div>
 		<div>
 			<input
+				@keypress.enter="register"
 				v-model="registerRequest.passwordVerify"
 				class="input-primary passManager"
 				type="password"
@@ -72,10 +77,9 @@ export default class Register extends Vue {
 				this.$emit("registered", "MrrrLuiigii");
 			})
 			.catch((err: { message: string }) => {
-				this.error = err.message[0] || "Whoops... Something went wrong...";
+				if (Array.isArray(err.message)) return (this.error = err.message[0]);
+				this.error = err.message;
 			});
-
-		this.$emit("registered", "MrrrLuiigii");
 	}
 }
 </script>
