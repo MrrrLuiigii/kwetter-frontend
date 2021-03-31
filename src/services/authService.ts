@@ -14,7 +14,7 @@ class AuthService {
 					return res;
 				}
 			})
-			.catch(err => {
+			.catch((err: any) => {
 				throw err;
 			});
 	}
@@ -29,7 +29,22 @@ class AuthService {
 					return res;
 				}
 			})
-			.catch(err => {
+			.catch((err: any) => {
+				throw err;
+			});
+	}
+
+	public static verify(token: string) {
+		const url: string = "auth/verify";
+
+		return AxiosRequestHandler.patch(url, {})
+			.then((res: AxiosResponse) => {
+				if (res.status >= 200 && res.status < 300) {
+					store.dispatch("saveUser", res.data);
+					return res;
+				}
+			})
+			.catch((err: any) => {
 				throw err;
 			});
 	}

@@ -4,10 +4,14 @@ import BadRequestException from "./exceptions/badRequest.exception";
 import HttpException from "./exceptions/httpException";
 import InternalServerException from "./exceptions/internalServer.exception";
 import UnauthorizedException from "./exceptions/unauthorized.exception";
+import store from "@/store/index";
 
 class AxiosRequestHandler {
 	private static api = axios.create({
-		baseURL: process.env.VUE_APP_GATEWAY_HOST
+		baseURL: process.env.VUE_APP_GATEWAY_HOST,
+		headers: {
+			Authorization: store.getters.getUser.token
+		}
 	});
 
 	public static get(url: string): any {
@@ -35,6 +39,19 @@ class AxiosRequestHandler {
 	}
 
 	public static put(url: string, object: any): any {
+		return this.api
+			.put(url, object)
+			.then((res: AxiosResponse) => {
+				return res;
+			})
+			.catch((err: AxiosError) => {
+				if (err.response) {
+					return err.response;
+				}
+			});
+	}
+
+	public static patch(url: string, object: any): any {
 		return this.api
 			.put(url, object)
 			.then((res: AxiosResponse) => {

@@ -3,8 +3,6 @@ import Router from "vue-router";
 import store from "@/store";
 
 import LandingsView from "@/views/LandingsView.vue";
-import HomeView from "@/views/HomeView.vue";
-import ProfileView from "@/views/ProfileView.vue";
 
 Vue.use(Router);
 
@@ -17,6 +15,16 @@ const router = new Router({
 			component: LandingsView,
 			meta: {
 				title: "Landingspage - Kwetter"
+			}
+		},
+		{
+			path: "/verify",
+			name: "Verify",
+			component: () =>
+				import(/* webpackChunkName: "Verify" */ "../views/VerifyView.vue"),
+			meta: {
+				title: "Verify - Kwetter",
+				requiresAuth: true
 			}
 		},
 		{

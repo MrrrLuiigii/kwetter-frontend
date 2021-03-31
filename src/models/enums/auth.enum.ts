@@ -3,3 +3,9 @@ export enum Role {
 	Moderator,
 	User
 }
+
+export enum AccountStatus {
+	Pending,
+	Active,
+	Banned
+}

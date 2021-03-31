@@ -102,6 +102,7 @@ export default class Navigation extends Vue {
 
 			&__input {
 				background-color: red;
+				//TODO: style size
 			}
 
 			&__feather {
@@ -136,13 +137,13 @@ export default class Navigation extends Vue {
 
 .background {
 	position: absolute;
-	right: -3.5em;
+	right: -5.5vh;
 
 	width: 0;
 	height: 0;
 
-	border-left: 7vh solid transparent;
-	border-right: 7vh solid transparent;
+	border-left: 7.5vh solid transparent;
+	border-right: 5.5vh solid transparent;
 	border-bottom: 7.5vh solid color(app-background);
 }
 
