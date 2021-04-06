@@ -65,3 +65,19 @@ select {
 .errorMsg {
 	color: color(app-accent);
 }
+
+.chip {
+	display: flex;
+
+	width: auto;
+	height: 1.5em;
+
+	padding: 0 0.5em;
+
+	background-color: color(app-gray);
+	border-radius: $border-radius;
+
+	&__remove {
+		margin: 0.1em 0 0 1em;
+	}
+}

@@ -44,10 +44,16 @@
 </template>
 
 <script lang="ts">
-import FeatherBackground from "@/components/FeatherBackground.vue";
 import { Component, Vue } from "vue-property-decorator";
-import { RegisterRequest } from "@/models/dto/auth.dto";
+
+//services
 import AuthService from "@/services/authService";
+
+//dto
+import { RegisterRequest } from "@/models/dto/auth.dto";
+
+//components
+import FeatherBackground from "@/components/FeatherBackground.vue";
 
 @Component({ components: { FeatherBackground } })
 export default class Register extends Vue {
@@ -72,7 +78,6 @@ export default class Register extends Vue {
 
 		AuthService.register(this.registerRequest)
 			.then((res: any) => {
-				console.log(res);
 				this.error = "";
 				this.$emit("registered", "MrrrLuiigii");
 			})

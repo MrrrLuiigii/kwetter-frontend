@@ -20,6 +20,7 @@ import {
 	faBars,
 	faFeatherAlt,
 	faSignOutAlt,
+	faTimes,
 	faUser
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
@@ -34,7 +35,7 @@ Vue.use(VueMeta, {
 	refreshOnceOnNavigation: true
 });
 
-library.add(faBars, faFeatherAlt, faUser, faSignOutAlt);
+library.add(faBars, faFeatherAlt, faUser, faSignOutAlt, faTimes);
 Vue.component("fa-icon", FontAwesomeIcon);
 
 const nodeEnv: "development" | "production" =
