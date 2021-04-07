@@ -46,6 +46,8 @@
 				</div>
 			</div>
 
+			<v-divider class="drawer__divider"></v-divider>
+
 			<div class="routes">
 				<ul>
 					<li><router-link :to="{ name: 'Home' }">Home</router-link></li>
@@ -58,8 +60,6 @@
 					<fa-icon :icon="['fas', 'sign-out-alt']" />
 				</button>
 			</div>
-
-			<v-divider class="drawer__divider"></v-divider>
 		</v-navigation-drawer>
 	</div>
 </template>
