@@ -11,7 +11,10 @@ class AxiosRequestHandler {
 		baseURL: process.env.VUE_APP_GATEWAY_HOST,
 		headers: {
 			Authorization:
-				"Bearer " + store.getters.getUser ? store.getters.getUser.token : ""
+				"Bearer " + store.getters.getUser !== undefined &&
+				store.getters.getUser !== null
+					? store.getters.getUser.token
+					: ""
 		}
 	});
 
