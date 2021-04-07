@@ -37,28 +37,69 @@
 			right
 			width="14vw"
 		>
-			<div class="user">
-				<div class="user__icon">
-					<fa-icon :icon="['fas', 'user']" />
-				</div>
-				<div class="user__username">
-					{{ user ? user.username : "" }}
+			<div class="drawer__header">
+				<div class="drawer__header__container">
+					<div class="user">
+						<div class="user__frame">
+							<fa-icon :icon="['fas', 'user']" />
+						</div>
+						<div class="user__username">
+							{{ user ? user.username : "" }}
+						</div>
+					</div>
+
+					<div class="drawer__header__container__bar">
+						<fa-icon
+							class="drawer__header__container__bar__feather feather-no-stroke"
+							:icon="['fas', 'feather-alt']"
+						/>
+						<fa-icon
+							class="drawer__header__container__bar__feather feather-stroke"
+							:icon="['fas', 'feather-alt']"
+						/>
+						<div class="drawer__background"></div>
+					</div>
 				</div>
 			</div>
 
-			<v-divider class="drawer__divider"></v-divider>
-
 			<div class="routes">
-				<ul>
-					<li><router-link :to="{ name: 'Home' }">Home</router-link></li>
-					<li><router-link :to="{ name: 'Profile' }">Profile</router-link></li>
+				<h1 class="routes__title">Menu</h1>
+
+				<ul class="routes__list">
+					<li class="routes__list__item">
+						<router-link :to="{ name: 'Home' }">
+							<div class="route">
+								<fa-icon
+									class="routes__list__item__before"
+									:icon="['fas', 'feather-alt']"
+								/>
+								<div class="router-link-selector">Home</div>
+							</div>
+						</router-link>
+					</li>
+					<li class="routes__list__item">
+						<router-link :to="{ name: 'Profile' }">
+							<div class="route">
+								<fa-icon
+									class="routes__list__item__before"
+									:icon="['fas', 'feather-alt']"
+								/>
+								<div class="router-link-selector">Profile</div>
+							</div>
+						</router-link>
+					</li>
 				</ul>
 			</div>
 
 			<div class="menu">
 				<button class="menu__logout" @click="logout">
 					<fa-icon :icon="['fas', 'sign-out-alt']" />
+					Logout
 				</button>
+			</div>
+
+			<div class="bottom-feather">
+				<fa-icon :icon="['fas', 'feather-alt']" />
 			</div>
 		</v-navigation-drawer>
 	</div>
@@ -130,6 +171,111 @@ export default class Navigation extends Vue {
 	}
 }
 
+.drawer {
+	background-color: color(primary);
+	border-left: 2px solid color(font);
+	max-width: 20em;
+
+	&__background {
+		position: absolute;
+		right: -3vh;
+		top: 4.5vh;
+
+		width: 0;
+		height: 0;
+
+		border-left: 3vh solid transparent;
+		border-right: 3vh solid transparent;
+		border-bottom: 3vh solid color(app-background);
+	}
+
+	&__header {
+		height: 7.5vh;
+		background-color: color(app-primary);
+
+		&__container {
+			&__bar {
+				&__feather {
+					position: absolute;
+					right: 0;
+					top: 4.5vh;
+					font-size: 3vh;
+					color: color(app-primary);
+					text-shadow: 0 0 3px #000;
+				}
+			}
+		}
+	}
+}
+
+.user {
+	display: flex;
+	align-items: center;
+	padding: 0.5em;
+
+	&__frame {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 6vh;
+		height: 6vh;
+		min-width: 6vh;
+		border: 5px solid color(app-font);
+		border-radius: 20px 0 20px 20px;
+		background-color: color(app-gray);
+	}
+
+	&__username {
+		//TODO: scalable font size
+		font-size: 1.5em;
+		padding-left: 0.5em;
+	}
+}
+
+.routes {
+	&__title {
+		text-align: left;
+		margin: 1.5em 0 1.5em 1.5em;
+		font-size: 2em;
+	}
+
+	&__list {
+		text-align: left;
+		list-style-type: none;
+
+		&__item {
+			text-decoration: none;
+			margin: 1em;
+			font-size: 1.5em;
+			color: color(app-font);
+
+			&__before {
+				color: color(app-primary);
+				margin-right: 1em;
+			}
+		}
+	}
+}
+
+.menu {
+	position: absolute;
+	bottom: 1em;
+	left: 2em;
+}
+
+.bottom-feather {
+	display: flex;
+	align-items: flex-end;
+
+	position: absolute;
+	bottom: -10px;
+	right: -10px;
+
+	color: color(app-primary);
+	transform: scaleX(-1);
+	font-size: 20vh;
+}
+
 .feather-stroke path {
 	stroke: color(app-background);
 	stroke-width: 35px;
@@ -155,37 +301,21 @@ export default class Navigation extends Vue {
 	border-bottom: 7.5vh solid color(app-background);
 }
 
-.drawer {
-	background-color: color(primary);
-	border-left: 2px solid color(font);
-	max-width: 20em;
+.router-link-active > .route > .router-link-selector {
+	border: 2px solid color(app-font);
+	border-radius: 10px 0 10px 10px;
+	background-color: color(app-gray);
 }
 
-.user {
+.router-link-selector {
+	padding: 0.25em;
+	width: 6em;
+	height: 2em;
+}
+
+.route {
+	color: color(app-font);
 	display: flex;
 	align-items: center;
-	padding: 0.5em;
-
-	&__icon {
-		font-size: 2em;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 2em;
-		height: 2em;
-		border: 2px solid black;
-		border-radius: 50%;
-	}
-
-	&__username {
-		padding-left: 0.5em;
-		font-size: 2em;
-		border: 0 0 2px 0 solid black;
-	}
-}
-
-.router-link {
-	text-decoration: none;
-	color: color(font);
 }
 </style>
