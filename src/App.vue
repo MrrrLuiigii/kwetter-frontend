@@ -1,6 +1,6 @@
 <template>
 	<v-app id="app">
-		<Navigation v-if="true" />
+		<Navigation v-if="$route.name !== 'Landingspage'" />
 		<router-view />
 	</v-app>
 </template>
@@ -25,7 +25,11 @@ import Navigation from "@/components/Navigation.vue";
 		]
 	}
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+	created() {
+		console.log(this.$route);
+	}
+}
 </script>
 
 <style lang="scss">
