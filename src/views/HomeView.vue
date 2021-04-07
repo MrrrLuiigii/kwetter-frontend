@@ -1,7 +1,5 @@
 <template>
 	<div v-if="user">
-		<Navigation />
-
 		WELKOM OP DE HOME PAGINA,
 		{{ user.username }}!
 	</div>
@@ -10,14 +8,9 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-//components
-import Navigation from "@/components/Navigation.vue";
-
 import AuthVM from "@/models/viewmodels/auth.viewmodel";
 
-@Component({
-	components: { Navigation }
-})
+@Component
 export default class HomeView extends Vue {
 	get user(): AuthVM {
 		return this.$store.getters.getUser;

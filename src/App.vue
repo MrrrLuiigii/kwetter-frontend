@@ -1,5 +1,6 @@
 <template>
 	<v-app id="app">
+		<Navigation v-if="true" />
 		<router-view />
 	</v-app>
 </template>
@@ -7,7 +8,11 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
+//components
+import Navigation from "@/components/Navigation.vue";
+
 @Component({
+	components: { Navigation },
 	metaInfo: {
 		meta: [
 			{ name: "title", content: "Kwetter" },

@@ -1,6 +1,5 @@
 <template>
 	<div>
-		<Navigation />
 		Your account has been verified
 		{{ user.username }}!
 
@@ -13,18 +12,13 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
-//components
-import Navigation from "@/components/Navigation.vue";
-
 //viewmodels
 import AuthVM from "@/models/viewmodels/auth.viewmodel";
 
 //services
 import AuthService from "@/services/authService";
 
-@Component({
-	components: { Navigation }
-})
+@Component
 export default class VerifyView extends Vue {
 	get user(): AuthVM {
 		return this.$store.getters.getUser;
