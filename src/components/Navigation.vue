@@ -68,7 +68,7 @@
 import { Component, Vue } from "vue-property-decorator";
 
 //viewmodels
-import AuthVM from "@/models/auth.viewmodel";
+import AuthVM from "@/models/viewmodels/auth.viewmodel";
 
 @Component
 export default class Navigation extends Vue {

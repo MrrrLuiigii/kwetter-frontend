@@ -1,4 +1,4 @@
-import AuthVM from "@/models/auth.viewmodel";
+import AuthVM from "@/models/viewmodels/auth.viewmodel";
 
 export default {
 	// namespaced: true,

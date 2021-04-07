@@ -17,7 +17,7 @@ import { Component, Vue } from "vue-property-decorator";
 import Navigation from "@/components/Navigation.vue";
 
 //viewmodels
-import AuthVM from "@/models/auth.viewmodel";
+import AuthVM from "@/models/viewmodels/auth.viewmodel";
 
 //services
 import AuthService from "@/services/authService";

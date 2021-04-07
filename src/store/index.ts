@@ -7,6 +7,7 @@ const ls = new SecureLS({ encodingType: "aes", isCompression: false });
 
 //modules
 import authModule from "./authModule";
+import profileModule from "./profileModule";
 
 Vue.use(Vuex);
 
@@ -20,5 +21,5 @@ export default new Vuex.Store({
 			}
 		})
 	],
-	modules: { authModule }
+	modules: { authModule, profileModule }
 });

@@ -13,7 +13,7 @@ import { Component, Vue } from "vue-property-decorator";
 //components
 import Navigation from "@/components/Navigation.vue";
 
-import AuthVM from "@/models/auth.viewmodel";
+import AuthVM from "@/models/viewmodels/auth.viewmodel";
 
 @Component({
 	components: { Navigation }

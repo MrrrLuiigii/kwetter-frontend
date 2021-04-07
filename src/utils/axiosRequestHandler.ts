@@ -10,7 +10,8 @@ class AxiosRequestHandler {
 	private static api = axios.create({
 		baseURL: process.env.VUE_APP_GATEWAY_HOST,
 		headers: {
-			Authorization: store.getters.getUser ? store.getters.getUser.token : ""
+			Authorization:
+				"Bearer " + store.getters.getUser ? store.getters.getUser.token : ""
 		}
 	});
 

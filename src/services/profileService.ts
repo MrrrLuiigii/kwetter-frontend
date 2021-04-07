@@ -1,4 +1,5 @@
 import { CreateProfileRequest } from "@/models/dto/profile.dto";
+import store from "@/store";
 import AxiosRequestHandler from "@/utils/axiosRequestHandler";
 import { AxiosResponse } from "axios";
 
@@ -9,7 +10,7 @@ class ProfileService {
 		return AxiosRequestHandler.post(url, createProfileRequest)
 			.then((res: AxiosResponse) => {
 				if (res.status >= 200 && res.status < 300) {
-					//TODO do something with profile
+					store.dispatch("saveProfile", res.data);
 					return res;
 				}
 			})
