@@ -1,6 +1,6 @@
 <template>
 	<div class="chip">
-		<div>{{ propChipName }}</div>
+		<div>#{{ propChipName }}</div>
 		<div class="chip__remove" @click="removeChip">
 			<fa-icon :icon="['fas', 'times']" />
 		</div>

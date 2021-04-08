@@ -1,16 +1,24 @@
 <template>
 	<div>
-		<Kweet />
-		WELKOM OP DE PROFIEL PAGINA!
+		<KweetContainer :propKweets="kweets" />
 	</div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import Kweet from "@/components/Kweet/Kweet.vue";
+import KweetContainer from "@/components/Kweet/KweetContainer.vue";
 
-@Component({ components: { Kweet } })
-export default class ProfileView extends Vue {}
+@Component({ components: { KweetContainer } })
+export default class ProfileView extends Vue {
+	public kweets: any[] = [
+		{
+			profile: { username: "Username" },
+			kweet:
+				"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
+			trends: ["Cool", "Awesome", "Yeet", "Mooi", "Kwetter", "Kweet"]
+		}
+	];
+}
 </script>
 
 <style lang="scss" scoped>

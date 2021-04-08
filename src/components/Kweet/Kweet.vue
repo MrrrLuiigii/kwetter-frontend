@@ -1,5 +1,5 @@
 <template>
-	<div class="kweet-container">
+	<div class="kweet-card">
 		<div class="profile">
 			{{/*TODO: photo */}}
 			{{/*TODO: posted ... ago */}}
@@ -8,9 +8,18 @@
 		<hr class="horizontal-divider" />
 
 		<div class="kweet">
-			<h1 class="kweet__username">{{ kweet.profile.username }}</h1>
-			<div></div>
-			<div class="trends"></div>
+			<h2 class="kweet__username">{{ kweet.profile.username }}</h2>
+			<p class="kweet__text">
+				{{ kweet.kweet }}
+			</p>
+			<div class="kweet__trends">
+				<span
+					class="kweet__trends__trend"
+					v-for="trend in kweet.trends"
+					:key="trend"
+					>#{{ trend }}</span
+				>
+			</div>
 		</div>
 	</div>
 </template>
@@ -18,14 +27,17 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 
-@Component
+//components
+import TrendChip from "@/components/TrendChip.vue";
+
+@Component({ components: { TrendChip } })
 export default class Kweet extends Vue {
 	//TODO: type
 	@Prop()
 	propKweet: any;
 
 	get kweet() {
-		return { profile: { username: "Username" } };
+		return this.propKweet;
 	}
 }
 </script>
@@ -33,12 +45,12 @@ export default class Kweet extends Vue {
 <style lang="scss" scoped>
 @import "@/styles/general";
 
-.kweet-container {
+.kweet-card {
 	display: flex;
-	width: 45em;
-	height: 15em;
+	width: 40em;
+	height: 12em;
 
-	margin: 0.5em;
+	// margin: 0.25em;
 	padding: 1em;
 
 	border-radius: $border-radius;
@@ -51,7 +63,7 @@ export default class Kweet extends Vue {
 }
 
 .horizontal-divider {
-	height: 13em;
+	height: 10em;
 	width: 0.25em;
 	background-color: color(app-font);
 	border: none;
@@ -59,7 +71,26 @@ export default class Kweet extends Vue {
 
 .kweet {
 	display: flex;
-	width: 70%;
-	padding: 0 0.5em;
+	flex-direction: column;
+	position: relative;
+
+	text-align: left;
+	width: 80%;
+	padding: 0 1em;
+
+	&__trends {
+		display: flex;
+		position: absolute;
+		bottom: 0;
+
+		width: calc(100% - 2em);
+		overflow-x: auto;
+		overflow-y: hidden;
+
+		&__trend {
+			color: color(app-accent);
+			margin: 0.25em 0.5em;
+		}
+	}
 }
 </style>
