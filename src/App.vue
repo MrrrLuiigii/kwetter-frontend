@@ -55,12 +55,21 @@ body {
 	user-select: none; // Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox
 }
 
-// @font-face {
-// 	font-family: "SuperMunchkin";
-// 	src: url("./assets/font/Quasimodo Regular.ttf");
-// }
-
+//#region scrollbar
 ::-webkit-scrollbar {
-	display: none;
+	width: 10px;
+	height: 10px;
 }
+::-webkit-scrollbar-track {
+	background-color: color(app-background);
+	border-radius: 7px 0 7px 7px;
+}
+::-webkit-scrollbar-thumb {
+	background-color: color(app-primary);
+	border: 2px solid color(app-font);
+
+	border-radius: 7px 0 7px 7px;
+}
+
+//#endregion
 </style>
