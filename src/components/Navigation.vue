@@ -261,6 +261,7 @@ export default class Navigation extends Vue {
 	position: absolute;
 	bottom: 1em;
 	left: 2em;
+	z-index: 2;
 }
 
 .bottom-feather {
@@ -270,6 +271,7 @@ export default class Navigation extends Vue {
 	position: absolute;
 	bottom: -10px;
 	right: -10px;
+	z-index: 1;
 
 	color: color(app-primary);
 	transform: scaleX(-1);
