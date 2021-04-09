@@ -133,7 +133,6 @@ export default class PostRegister extends Vue {
 		ProfileService.createProfile(this.createProfileRequest)
 			.then((res: any) => {
 				this.error = "";
-				console.log("TESTTEST");
 				this.$router.replace({ name: "Home" });
 			})
 			.catch((err: { message: string }) => {

@@ -25,8 +25,6 @@ export default class VerifyView extends Vue {
 	}
 
 	created() {
-		console.log("created");
-
 		if (this.$route.query.token) {
 			AuthService.verify().catch((err: any) => {
 				//TODO: show error with verify
