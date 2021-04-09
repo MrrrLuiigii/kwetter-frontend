@@ -1,6 +1,7 @@
 <template>
 	<div>
 		<KweetContainer :propKweets="profile.kweets" />
+		<ProfileContainer :propProfile="profile" />
 		{{ profile }}
 	</div>
 </template>
@@ -10,11 +11,12 @@ import { Component, Vue } from "vue-property-decorator";
 
 //components
 import KweetContainer from "@/components/Kweet/KweetContainer.vue";
+import ProfileContainer from "@/components/Profile/ProfileContainer.vue";
 
 //services
 import ProfileService from "@/services/profileService";
 
-@Component({ components: { KweetContainer } })
+@Component({ components: { KweetContainer, ProfileContainer } })
 export default class ProfileView extends Vue {
 	private error: string = "";
 

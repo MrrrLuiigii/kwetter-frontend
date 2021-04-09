@@ -1,20 +1,20 @@
 <template>
-	<div class="kweet-container">
-		<div class="kweet-container__header">
+	<div class="container">
+		<div class="container__header">
 			<!-- TODO: make into actual tabs -->
-			<div class="kweet-container__header__tab" inactive>
+			<div class="container__header__tab" inactive>
 				<fa-icon
-					class="kweet-container__header__tab__feather"
+					class="container__header__tab__feather"
 					:icon="['fas', 'feather-alt']"
 				/>
-				<div class="kweet-container__header__tab__name">@Mentions</div>
+				<div class="container__header__tab__name">@Mentions</div>
 			</div>
-			<div class="kweet-container__header__tab">
+			<div class="container__header__tab">
 				<fa-icon
-					class="kweet-container__header__tab__feather"
+					class="container__header__tab__feather"
 					:icon="['fas', 'feather-alt']"
 				/>
-				<div class="kweet-container__header__tab__name">Kweets</div>
+				<div class="container__header__tab__name">Kweets</div>
 			</div>
 		</div>
 		<Kweet v-for="kweet in kweets" :key="kweet.id" :propKweet="kweet" />
@@ -42,16 +42,8 @@ export default class KweetContainer extends Vue {
 <style lang="scss" scoped>
 @import "@/styles/general";
 
-.kweet-container {
-	position: relative;
-
-	margin: 2em;
-	padding: 1em;
-
+.container {
 	width: 42.5em;
-
-	border: 4px solid color(app-font);
-	border-radius: $border-radius;
 
 	&__header {
 		display: flex;
@@ -73,7 +65,7 @@ export default class KweetContainer extends Vue {
 			color: color(app-font);
 		}
 
-		&__tab[inactive] > .kweet-container__header__tab__feather {
+		&__tab[inactive] > .container__header__tab__feather {
 			color: color(app-background);
 		}
 	}
