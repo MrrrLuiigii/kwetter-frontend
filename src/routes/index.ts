@@ -39,7 +39,7 @@ const router = new Router({
 			}
 		},
 		{
-			path: "/profile",
+			path: "/profile/:id?",
 			name: "Profile",
 			component: () =>
 				import(/* webpackChunkName: "Profile" */ "../views/ProfileView.vue"),

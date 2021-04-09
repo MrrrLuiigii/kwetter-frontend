@@ -1,23 +1,36 @@
 <template>
 	<div>
-		<KweetContainer :propKweets="kweets" />
+		<KweetContainer :propKweets="profile.kweets" />
+		{{ profile }}
 	</div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+
+//components
 import KweetContainer from "@/components/Kweet/KweetContainer.vue";
+
+//services
+import ProfileService from "@/services/profileService";
 
 @Component({ components: { KweetContainer } })
 export default class ProfileView extends Vue {
-	public kweets: any[] = [
-		{
-			profile: { username: "Username" },
-			kweet:
-				"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
-			trends: ["Cool", "Awesome", "Yeet", "Mooi", "Kwetter", "Kweet"]
-		}
-	];
+	private error: string = "";
+
+	get profile() {
+		return this.$store.getters.getProfile;
+	}
+
+	created() {
+		ProfileService.getProfile(this.$route.params.id)
+			.then((res: any) => {
+				this.error = "";
+			})
+			.catch((err: any) => {
+				this.error = err.message;
+			});
+	}
 }
 </script>
 

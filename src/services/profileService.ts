@@ -1,18 +1,28 @@
-import { CreateProfileRequest } from "@/models/dto/profile.dto";
+import { AxiosResponse } from "axios";
 import store from "@/store";
 import AxiosRequestHandler from "@/utils/axiosRequestHandler";
-import { AxiosResponse } from "axios";
+import { CreateProfileRequest } from "@/models/dto/profile.dto";
 
 class ProfileService {
-	public static createProfile(createProfileRequest: CreateProfileRequest) {
-		const url: string = "/profile";
+	private static serviceUrl = "/profile";
 
-		return AxiosRequestHandler.post(url, createProfileRequest)
+	public static getProfile(id?: string) {
+		const url: string = (this.serviceUrl += id ? `/${id}` : "");
+		return AxiosRequestHandler.get(url)
 			.then((res: AxiosResponse) => {
-				if (res.status >= 200 && res.status < 300) {
-					store.dispatch("saveProfile", res.data);
-					return res;
-				}
+				store.dispatch("saveProfile", res.data);
+				return res;
+			})
+			.catch((err: any) => {
+				throw err;
+			});
+	}
+
+	public static createProfile(createProfileRequest: CreateProfileRequest) {
+		return AxiosRequestHandler.post(this.serviceUrl, createProfileRequest)
+			.then((res: AxiosResponse) => {
+				store.dispatch("saveProfile", res.data);
+				return res;
 			})
 			.catch((err: any) => {
 				throw err;

@@ -9,10 +9,8 @@ class AuthService {
 
 		return AxiosRequestHandler.post(url, registerRequest)
 			.then((res: AxiosResponse) => {
-				if (res.status >= 200 && res.status < 300) {
-					store.dispatch("saveUser", res.data);
-					return res;
-				}
+				store.dispatch("saveUser", res.data);
+				return res;
 			})
 			.catch((err: any) => {
 				throw err;
@@ -24,10 +22,8 @@ class AuthService {
 
 		return AxiosRequestHandler.post(url, loginRequest)
 			.then((res: AxiosResponse) => {
-				if (res.status >= 200 && res.status < 300) {
-					store.dispatch("saveUser", res.data);
-					return res;
-				}
+				store.dispatch("saveUser", res.data);
+				return res;
 			})
 			.catch((err: any) => {
 				throw err;
@@ -37,14 +33,10 @@ class AuthService {
 	public static verify() {
 		const url: string = "auth/verify";
 
-		console.log("service");
-
 		return AxiosRequestHandler.patch(url, {})
 			.then((res: AxiosResponse) => {
-				if (res.status >= 200 && res.status < 300) {
-					store.dispatch("saveUser", res.data);
-					return res;
-				}
+				store.dispatch("saveUser", res.data);
+				return res;
 			})
 			.catch((err: any) => {
 				throw err;
