@@ -22,11 +22,16 @@ class AxiosRequestHandler {
 		return this.api
 			.get(url)
 			.then((res: AxiosResponse) => {
+				if (!this.checkResponseOK(res))
+					throw this.checkStatusCode(res.status, res.data);
 				return res;
 			})
 			.catch((err: AxiosError) => {
 				if (err.response) {
-					return err.response;
+					throw this.checkStatusCode(
+						err.response.status,
+						err.response.data.message
+					);
 				}
 			});
 	}
@@ -35,10 +40,15 @@ class AxiosRequestHandler {
 		return this.api
 			.post(url, object)
 			.then((res: AxiosResponse) => {
+				if (!this.checkResponseOK(res))
+					throw this.checkStatusCode(res.status, res.data);
 				return res;
 			})
 			.catch((err: AxiosError) => {
-				throw this.checkStatusCode(err);
+				throw this.checkStatusCode(
+					err.response.status,
+					err.response.data.message
+				);
 			});
 	}
 
@@ -46,11 +56,16 @@ class AxiosRequestHandler {
 		return this.api
 			.put(url, object)
 			.then((res: AxiosResponse) => {
+				if (!this.checkResponseOK(res))
+					throw this.checkStatusCode(res.status, res.data);
 				return res;
 			})
 			.catch((err: AxiosError) => {
 				if (err.response) {
-					return err.response;
+					throw this.checkStatusCode(
+						err.response.status,
+						err.response.data.message
+					);
 				}
 			});
 	}
@@ -59,11 +74,16 @@ class AxiosRequestHandler {
 		return this.api
 			.patch(url, object)
 			.then((res: AxiosResponse) => {
+				if (!this.checkResponseOK(res))
+					throw this.checkStatusCode(res.status, res.data);
 				return res;
 			})
 			.catch((err: AxiosError) => {
 				if (err.response) {
-					return err.response;
+					throw this.checkStatusCode(
+						err.response.status,
+						err.response.data.message
+					);
 				}
 			});
 	}
@@ -74,19 +94,31 @@ class AxiosRequestHandler {
 				data: object
 			})
 			.then((res: AxiosResponse) => {
+				if (!this.checkResponseOK(res))
+					throw this.checkStatusCode(res.status, res.data);
 				return res;
 			})
 			.catch((err: AxiosError) => {
 				if (err.response) {
-					return err.response;
+					throw this.checkStatusCode(
+						err.response.status,
+						err.response.data.message
+					);
 				}
 			});
 	}
 
-	private static checkStatusCode(err: AxiosError<any>): HttpException {
-		const message: string = err.response.data.message;
-		switch (err.response.status) {
+	private static checkResponseOK(res: AxiosResponse): boolean {
+		return res.status >= 200 && res.status < 300;
+	}
+
+	private static checkStatusCode(
+		status: number,
+		message: string
+	): HttpException {
+		switch (status) {
 			case StatusCodes.UNAUTHORIZED:
+				store.dispatch("logout");
 				return new UnauthorizedException(message);
 			case StatusCodes.BAD_REQUEST:
 				return new BadRequestException(message);
