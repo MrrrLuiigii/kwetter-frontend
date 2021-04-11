@@ -11,6 +11,9 @@ import { Component, Vue } from "vue-property-decorator";
 //components
 import Navigation from "@/components/Navigation.vue";
 
+//services
+import AuthService from "@/services/authService";
+
 @Component({
 	components: { Navigation },
 	metaInfo: {
@@ -25,7 +28,11 @@ import Navigation from "@/components/Navigation.vue";
 		]
 	}
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+	created() {
+		AuthService.validate();
+	}
+}
 </script>
 
 <style lang="scss">

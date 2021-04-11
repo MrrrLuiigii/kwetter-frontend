@@ -252,6 +252,7 @@ export default class Navigation extends Vue {
 			&__before {
 				color: color(app-primary);
 				margin-right: 1em;
+				transform: rotate(45deg);
 			}
 		}
 	}

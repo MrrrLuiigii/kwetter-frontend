@@ -1,6 +1,6 @@
 <template>
 	<div class="flex">
-		<div class="buttons">
+		<div v-if="!user" class="buttons">
 			<button
 				v-if="landingPageType === 0 || landingPageType === 2"
 				class="button-alt button-login"
@@ -16,10 +16,13 @@
 				Sign up
 			</button>
 		</div>
-		<GettingStarted v-if="pageType === 0" />
-		<Login v-else-if="pageType === 1" />
-		<Register @registered="register" v-else-if="pageType === 2" />
-		<PostRegister :propUsername="username" v-else-if="pageType === 3" />
+		<WelcomeBack v-if="user" :username="user.username" />
+		<div v-else>
+			<GettingStarted v-if="pageType === 0" />
+			<Login v-else-if="pageType === 1" />
+			<Register @registered="register" v-else-if="pageType === 2" />
+			<PostRegister :propUsername="username" v-else-if="pageType === 3" />
+		</div>
 		<FeatherBackground />
 	</div>
 </template>
@@ -36,6 +39,7 @@ import GettingStarted from "@/components/GettingStarted/GettingStarted.vue";
 import Login from "@/components/GettingStarted/Login.vue";
 import Register from "@/components/GettingStarted/Register.vue";
 import PostRegister from "@/components/GettingStarted/PostRegister.vue";
+import WelcomeBack from "@/components/GettingStarted/WelcomeBack.vue";
 
 @Component({
 	components: {
@@ -43,7 +47,8 @@ import PostRegister from "@/components/GettingStarted/PostRegister.vue";
 		GettingStarted,
 		Login,
 		Register,
-		PostRegister
+		PostRegister,
+		WelcomeBack
 	}
 })
 export default class LandingsView extends Vue {
@@ -61,6 +66,11 @@ export default class LandingsView extends Vue {
 	}
 	set username(username) {
 		this.propUsername = username;
+	}
+
+	//TODO: type
+	get user(): any {
+		return this.$store.getters.getUser;
 	}
 
 	register(username: string) {

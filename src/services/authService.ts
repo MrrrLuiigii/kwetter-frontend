@@ -42,6 +42,14 @@ class AuthService {
 				throw err;
 			});
 	}
+
+	public static validate() {
+		if (store.getters.getUser) {
+			const url: string = "auth/validate";
+			return AxiosRequestHandler.get(url);
+		}
+		store.dispatch("logout");
+	}
 }
 
 export default AuthService;

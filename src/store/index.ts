@@ -11,7 +11,13 @@ import profileModule from "./profileModule";
 
 Vue.use(Vuex);
 
+const defaultState = {
+	authModule: {},
+	profileModule: {}
+};
+
 export default new Vuex.Store({
+	state: defaultState,
 	plugins: [
 		createPersistedState({
 			storage: {
@@ -21,5 +27,15 @@ export default new Vuex.Store({
 			}
 		})
 	],
-	modules: { authModule, profileModule }
+	modules: { authModule, profileModule },
+	mutations: {
+		CLEAR_STATE(state: any) {
+			Object.assign(state, defaultState);
+		}
+	},
+	actions: {
+		logout({ commit }: any) {
+			commit("CLEAR_STATE");
+		}
+	}
 });

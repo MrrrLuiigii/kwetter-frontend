@@ -18,9 +18,6 @@ export default {
 	actions: {
 		saveUser({ commit }: any, user: AuthVM) {
 			commit("SAVE_USER", user);
-		},
-		logout({ commit }: any) {
-			commit("SAVE_USER", null);
 		}
 	}
 };

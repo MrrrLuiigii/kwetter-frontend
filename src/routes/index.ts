@@ -58,11 +58,15 @@ router.beforeEach((to, from, next) => {
 	const user = store.getters.getUser;
 	const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
-	if (to.name === "Verify" && user.status !== AccountStatus.Pending)
-		next({ name: from.name ? from.name : "Home" });
-	else if (requiresAuth && !user) next({ name: "Landingspage" });
-	else if (!requiresAuth && !!user) next({ name: "Home" });
-	else next();
+	if (requiresAuth && !user) return next({ name: "Landingspage" });
+	else if (
+		to.name === "Verify" &&
+		user &&
+		user.status !== AccountStatus.Pending
+	)
+		return next({ name: from.name ? from.name : "Home" });
+
+	next();
 });
 
 router.beforeEach((to, from, next) => {

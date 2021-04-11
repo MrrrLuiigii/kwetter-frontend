@@ -10,15 +10,23 @@ class AxiosRequestHandler {
 	private static api = axios.create({
 		baseURL: process.env.VUE_APP_GATEWAY_HOST,
 		headers: {
-			Authorization:
-				"Bearer " + store.getters.getUser !== undefined &&
-				store.getters.getUser !== null
-					? store.getters.getUser.token
-					: ""
+			Authorization: AxiosRequestHandler.getAuthHeaders()
 		}
 	});
 
+	private static getAuthHeaders() {
+		const authHeaders =
+			"Bearer " + store.getters.getUser !== undefined &&
+			store.getters.getUser !== null
+				? store.getters.getUser.token
+				: "";
+
+		if (this.api) this.api.defaults.headers["Authorization"] = authHeaders;
+		return authHeaders;
+	}
+
 	public static get(url: string): any {
+		this.getAuthHeaders();
 		return this.api
 			.get(url)
 			.then((res: AxiosResponse) => {
@@ -37,6 +45,7 @@ class AxiosRequestHandler {
 	}
 
 	public static post(url: string, object: any): any {
+		this.getAuthHeaders();
 		return this.api
 			.post(url, object)
 			.then((res: AxiosResponse) => {
@@ -53,6 +62,7 @@ class AxiosRequestHandler {
 	}
 
 	public static put(url: string, object: any): any {
+		this.getAuthHeaders();
 		return this.api
 			.put(url, object)
 			.then((res: AxiosResponse) => {
@@ -71,6 +81,7 @@ class AxiosRequestHandler {
 	}
 
 	public static patch(url: string, object: any): any {
+		this.getAuthHeaders();
 		return this.api
 			.patch(url, object)
 			.then((res: AxiosResponse) => {
@@ -89,6 +100,7 @@ class AxiosRequestHandler {
 	}
 
 	public static delete(url: string, object: any): any {
+		this.getAuthHeaders();
 		return this.api
 			.delete(url, {
 				data: object
@@ -118,6 +130,7 @@ class AxiosRequestHandler {
 	): HttpException {
 		switch (status) {
 			case StatusCodes.UNAUTHORIZED:
+				//TODO: get new token and perform request again
 				store.dispatch("logout");
 				return new UnauthorizedException(message);
 			case StatusCodes.BAD_REQUEST:
