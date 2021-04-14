@@ -40,6 +40,7 @@ import Login from "@/components/GettingStarted/Login.vue";
 import Register from "@/components/GettingStarted/Register.vue";
 import PostRegister from "@/components/GettingStarted/PostRegister.vue";
 import WelcomeBack from "@/components/GettingStarted/WelcomeBack.vue";
+import { AccountStatus } from "@/models/enums/auth.enum";
 
 @Component({
 	components: {
@@ -70,6 +71,8 @@ export default class LandingsView extends Vue {
 
 	//TODO: type
 	get user(): any {
+		const user = this.$store.getters.getUser;
+		if (!user || user.status === AccountStatus.Pending) return undefined;
 		return this.$store.getters.getUser;
 	}
 

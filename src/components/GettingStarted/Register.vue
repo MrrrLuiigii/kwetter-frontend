@@ -79,7 +79,7 @@ export default class Register extends Vue {
 		AuthService.register(this.registerRequest)
 			.then((res: any) => {
 				this.error = "";
-				this.$emit("registered", "MrrrLuiigii");
+				this.$emit("registered", this.registerRequest.username);
 			})
 			.catch((err: { message: string }) => {
 				if (Array.isArray(err.message)) return (this.error = err.message[0]);
