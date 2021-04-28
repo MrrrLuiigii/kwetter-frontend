@@ -1,8 +1,13 @@
 <template>
-	<div>
-		<KweetContainer :propKweets="profile.kweets" />
-		<ProfileContainer :propProfile="profile" />
-		{{ profile }}
+	<div class="profile">
+		<KweetContainer class="profile__left" :propKweets="profile.kweets" />
+		<div class="profile__right">
+			<ProfileContainer :propProfile="profile" />
+			<FollowContainer
+				:propFollowers="profile.followers"
+				:propFollowed="profile.followed"
+			/>
+		</div>
 	</div>
 </template>
 
@@ -12,11 +17,14 @@ import { Component, Vue } from "vue-property-decorator";
 //components
 import KweetContainer from "@/components/Kweet/KweetContainer.vue";
 import ProfileContainer from "@/components/Profile/ProfileContainer.vue";
+import FollowContainer from "@/components/Follow/FollowContainer.vue";
 
 //services
 import ProfileService from "@/services/profileService";
 
-@Component({ components: { KweetContainer, ProfileContainer } })
+@Component({
+	components: { KweetContainer, ProfileContainer, FollowContainer }
+})
 export default class ProfileView extends Vue {
 	private error: string = "";
 
@@ -38,4 +46,18 @@ export default class ProfileView extends Vue {
 
 <style lang="scss" scoped>
 @import "@/styles/general";
+
+.profile {
+	display: flex;
+
+	&__left {
+		width: 60%;
+		height: 85vh;
+		margin-right: 1em;
+	}
+
+	&__right {
+		width: 40%;
+	}
+}
 </style>

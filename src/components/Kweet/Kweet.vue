@@ -1,8 +1,13 @@
 <template>
 	<div class="kweet-card">
 		<div class="profile">
-			{{/*TODO: photo */}}
-			{{/*TODO: posted ... ago */}}
+			<div class="profile__frame">
+				<img
+					class="profile__frame__img"
+					src="https://cdn2.iconfinder.com/data/icons/font-awesome/1792/user-512.png"
+				/>
+			</div>
+			<div class="profile__date">{{ createdAt }}</div>
 		</div>
 
 		<hr class="horizontal-divider" />
@@ -10,14 +15,14 @@
 		<div class="kweet">
 			<h2 class="kweet__username">{{ kweet.profile.username }}</h2>
 			<p class="kweet__text">
-				{{ kweet.kweet }}
+				{{ kweet.body }}
 			</p>
 			<div class="kweet__trends">
 				<span
 					class="kweet__trends__trend"
 					v-for="trend in kweet.trends"
-					:key="trend"
-					>#{{ trend }}</span
+					:key="trend.id"
+					>#{{ trend.name }}</span
 				>
 			</div>
 		</div>
@@ -39,6 +44,12 @@ export default class Kweet extends Vue {
 	get kweet() {
 		return this.propKweet;
 	}
+
+	get createdAt() {
+		const createdAt: string = this.propKweet.createdAt;
+		const dateArray = new Date(createdAt).toLocaleString().split(", ");
+		return [dateArray[1], dateArray[0]].join(" ");
+	}
 }
 </script>
 
@@ -47,19 +58,45 @@ export default class Kweet extends Vue {
 
 .kweet-card {
 	display: flex;
-	width: 40em;
+	width: 100%;
+	min-width: 30em;
 	height: 12em;
-
-	// margin: 0.25em;
 	padding: 1em;
-
 	border-radius: $border-radius;
 	background-color: color(app-gray);
 }
 
 .profile {
 	display: flex;
-	width: 20%;
+	width: 7.6em;
+	position: relative;
+
+	&__frame {
+		display: flex;
+
+		background-color: color(app-background);
+		border-radius: $border-radius-small;
+
+		width: 90%;
+		height: 6.84em;
+
+		position: relative;
+
+		&__img {
+			position: absolute;
+			top: 0;
+			width: 100%;
+		}
+	}
+
+	&__date {
+		font-size: 0.75em;
+		text-align: right;
+		margin-right: 1em;
+
+		position: absolute;
+		bottom: 0;
+	}
 }
 
 .horizontal-divider {
@@ -92,5 +129,20 @@ export default class Kweet extends Vue {
 			margin: 0.25em 0.5em;
 		}
 	}
+}
+
+::-webkit-scrollbar {
+	width: 10px;
+	height: 10px;
+}
+::-webkit-scrollbar-track {
+	background-color: color(app-background);
+	border-radius: 7px 0 7px 7px;
+}
+::-webkit-scrollbar-thumb {
+	background-color: color(app-primary);
+	border: 2px solid color(app-font);
+
+	border-radius: 7px 0 7px 7px;
 }
 </style>

@@ -1,7 +1,10 @@
 <template>
 	<v-app id="app">
 		<Navigation v-if="$route.name !== 'Landingspage'" />
-		<router-view />
+		<div v-if="$route.name !== 'Landingspage'" class="router-view">
+			<router-view />
+		</div>
+		<router-view v-else />
 	</v-app>
 </template>
 
@@ -42,6 +45,12 @@ body {
 	-ms-overflow-style: none;
 }
 
+.router-view {
+	padding: 2em;
+	width: 100vw;
+	height: 100vh;
+}
+
 #app {
 	width: 100vw;
 	height: 100vh;
@@ -62,21 +71,7 @@ body {
 	user-select: none; // Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox
 }
 
-//#region scrollbar
 ::-webkit-scrollbar {
-	width: 10px;
-	height: 10px;
+	width: 0;
 }
-::-webkit-scrollbar-track {
-	background-color: color(app-background);
-	border-radius: 7px 0 7px 7px;
-}
-::-webkit-scrollbar-thumb {
-	background-color: color(app-primary);
-	border: 2px solid color(app-font);
-
-	border-radius: 7px 0 7px 7px;
-}
-
-//#endregion
 </style>

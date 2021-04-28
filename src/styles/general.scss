@@ -86,24 +86,3 @@ a {
 	text-decoration: none;
 	color: color(app-font);
 }
-
-.container {
-	position: relative;
-	margin: 2em;
-	padding: 1em;
-
-	min-height: 20em;
-	min-width: 40em;
-
-	border: 4px solid color(app-font);
-	border-radius: $border-radius;
-
-	&__feather {
-		position: absolute;
-		top: 0.5em;
-		right: 0.5em;
-
-		color: color(app-primary);
-		font-size: 2em;
-	}
-}

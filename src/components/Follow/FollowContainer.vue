@@ -10,7 +10,9 @@
 					class="container__header__tab__feather"
 					:icon="['fas', 'feather-alt']"
 				/>
-				<div class="container__header__tab__name">@Mentions</div>
+				<div class="container__header__tab__name">
+					Followers ({{ followers ? followers.length : 0 }})
+				</div>
 			</div>
 			<div
 				class="container__header__tab"
@@ -21,16 +23,16 @@
 					class="container__header__tab__feather"
 					:icon="['fas', 'feather-alt']"
 				/>
-				<div class="container__header__tab__name">Kweets</div>
+				<div class="container__header__tab__name">
+					Followed ({{ followed ? followed.length : 0 }})
+				</div>
 			</div>
 		</div>
-		<div v-if="kweets.length === 0">No Kweets yet...</div>
-		<div v-else-if="tab === 0" class="container__items">
-			<!-- TODO: show kweets where profile got mentioned -->
-			<Kweet v-for="kweet in kweets" :key="kweet.id" :propKweet="kweet" />
+		<div v-if="tab === 0" class="container__items">
+			followers: {{ followers }}
 		</div>
 		<div v-if="tab === 1" class="container__items">
-			<Kweet v-for="kweet in kweets" :key="kweet.id" :propKweet="kweet" />
+			followed: {{ followed }}
 		</div>
 	</div>
 </template>
@@ -38,26 +40,24 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 
-//components
-import Kweet from "@/components/Kweet/Kweet.vue";
-
-@Component({ components: { Kweet } })
-export default class KweetContainer extends Vue {
+@Component
+export default class FollowContainer extends Vue {
 	//TODO: type
 	@Prop()
-	propKweets: any[];
+	propFollowers: any[];
+	propFollowed: any[];
 
 	private tab: number = 1;
 	changeTab(index: number) {
 		this.tab = index;
 	}
 
-	get kweets() {
-		return this.propKweets;
+	get followers() {
+		return this.propFollowers;
 	}
 
-	get mentionKweets() {
-		return this.propKweets;
+	get followed() {
+		return this.propFollowed;
 	}
 }
 </script>
@@ -70,6 +70,8 @@ export default class KweetContainer extends Vue {
 	padding: 1em;
 	border: 4px solid color(app-font);
 	border-radius: $border-radius;
+	margin-top: 1em;
+	height: 42.2em;
 
 	&__header {
 		display: flex;
