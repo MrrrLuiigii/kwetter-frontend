@@ -1,10 +1,12 @@
 import AuthVM from "@/models/viewmodels/auth.viewmodel";
 
+export const state = {
+	user: null
+};
+
 export default {
 	// namespaced: true,
-	state: {
-		user: null
-	},
+	state,
 	mutations: {
 		SAVE_USER(state: any, user: AuthVM) {
 			state.user = user;

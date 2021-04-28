@@ -1,10 +1,12 @@
 import ProfileVM from "@/models/viewmodels/profile.viewmodel";
 
+export const state = {
+	profile: null
+};
+
 export default {
 	// namespaced: true,
-	state: {
-		profile: null
-	},
+	state,
 	mutations: {
 		SAVE_PROFILE(state: any, profile: ProfileVM) {
 			state.profile = profile;

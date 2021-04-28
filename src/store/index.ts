@@ -1,7 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import createPersistedState from "vuex-persistedstate";
-
 import SecureLS from "secure-ls";
 const ls = new SecureLS({ encodingType: "aes", isCompression: false });
 
@@ -9,11 +8,15 @@ const ls = new SecureLS({ encodingType: "aes", isCompression: false });
 import authModule from "./authModule";
 import profileModule from "./profileModule";
 
+//state
+import { state as authState } from "./authModule";
+import { state as profileState } from "./profileModule";
+
 Vue.use(Vuex);
 
 const defaultState = {
-	authModule: {},
-	profileModule: {}
+	authModule: authState,
+	profileModule: profileState
 };
 
 export default new Vuex.Store({
@@ -30,7 +33,14 @@ export default new Vuex.Store({
 	modules: { authModule, profileModule },
 	mutations: {
 		CLEAR_STATE(state: any) {
-			Object.assign(state, defaultState);
+			const newState = { authModule: {}, profileModule: {} };
+			Object.keys(authState).forEach(key => {
+				newState["authModule"][key] = null;
+			});
+			Object.keys(profileState).forEach(key => {
+				newState["profileModule"][key] = null;
+			});
+			Object.assign(state, newState);
 		}
 	},
 	actions: {

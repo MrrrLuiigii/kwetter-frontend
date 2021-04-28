@@ -15,14 +15,11 @@ class AxiosRequestHandler {
 	});
 
 	private static getAuthHeaders() {
-		const authHeaders =
-			"Bearer " + store.getters.getUser !== undefined &&
-			store.getters.getUser !== null
-				? store.getters.getUser.token
-				: "";
-
-		if (this.api) this.api.defaults.headers["Authorization"] = authHeaders;
-		return authHeaders;
+		if (store.getters.getUser) {
+			const authHeaders = "Bearer " + store.getters.getUser.token;
+			if (this.api) this.api.defaults.headers["Authorization"] = authHeaders;
+			return authHeaders;
+		} else if (this.api) delete this.api.defaults.headers["Authorization"];
 	}
 
 	public static get(url: string): any {
