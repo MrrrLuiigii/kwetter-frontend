@@ -11,26 +11,34 @@ export default {
 	namespaced: true,
 	state,
 	mutations: {
-		SET_PAGINATION(state: any, pagination: { skip: number; take: number }) {
-			state.skip = pagination.skip;
-			state.take = pagination.take;
+		RESET_PAGINATION(state: any) {
+			state.skip = 0;
+			state.take = 4;
+			state.count = 0;
+			state.kweets = [];
+		},
+		PAGE_UP(state: any) {
+			state.skip += state.take;
 		},
 		SAVE_KWEETS(state: any, data: { data: KweetVM[]; count: number }) {
-			state.kweets = data.data;
+			state.kweets = state.kweets.concat(data.data);
 			state.count = data.count;
 		}
 	},
 	getters: {
-		getPagination: (state: { skip: number; take: number }) => {
-			return { skip: state.skip, take: state.take };
+		getPagination: (state: { skip: number; take: number; count: number }) => {
+			return { skip: state.skip, take: state.take, count: state.count };
 		},
 		getKweets: (state: { kweets: KweetVM[] }) => {
 			return state.kweets;
 		}
 	},
 	actions: {
-		setPagination({ commit }: any, pagination: { skip: number; take: number }) {
-			commit("SET_PAGINATION", pagination);
+		resetPagination({ commit }: any) {
+			commit("RESET_PAGINATION");
+		},
+		pageUp({ commit }: any) {
+			commit("PAGE_UP");
 		},
 		saveKweets({ commit }: any, data: { data: KweetVM[]; count: number }) {
 			commit("SAVE_KWEETS", data);

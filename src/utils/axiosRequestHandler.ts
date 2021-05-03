@@ -28,7 +28,17 @@ class AxiosRequestHandler {
 	): any {
 		this.getAuthHeaders();
 		return this.api
-			.get(url, pagination ? { params: pagination } : {})
+			.get(
+				url,
+				pagination
+					? {
+							params: {
+								skip: pagination.skip,
+								take: pagination.take
+							}
+					  }
+					: {}
+			)
 			.then((res: AxiosResponse) => {
 				if (!this.checkResponseOK(res))
 					throw this.checkStatusCode(res.status, res.data);

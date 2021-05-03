@@ -8,7 +8,6 @@ class KweetService {
 	public static getKweetsByProfileId(profileId: string) {
 		const params: { skip: number; take: number } =
 			store.getters["kweetModule/getPagination"];
-
 		const url: string = `${this.serviceUrl}/${profileId}`;
 		return AxiosRequestHandler.get(url, params)
 			.then((res: AxiosResponse) => {

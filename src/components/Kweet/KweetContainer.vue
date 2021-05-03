@@ -28,11 +28,20 @@
 		<div v-else-if="tab === 0" class="container__items">
 			<!-- TODO: show kweets where profile got mentioned -->
 			<Kweet v-for="kweet in kweets" :key="kweet.id" :propKweet="kweet" />
+			<infinite-loading
+				v-if="morePages"
+				@infinite="getMoreKweets"
+			></infinite-loading>
+			<div v-else>No more Kweets...</div>
 		</div>
 		<div v-if="tab === 1" class="container__items">
 			<Kweet v-for="kweet in kweets" :key="kweet.id" :propKweet="kweet" />
+			<infinite-loading
+				v-if="morePages"
+				@infinite="getMoreKweets"
+			></infinite-loading>
+			<div v-else>No more Kweets...</div>
 		</div>
-		<infinite-loading @infinite="getMoreKweets"></infinite-loading>
 	</div>
 </template>
 
@@ -42,12 +51,14 @@ import InfiniteLoading from "vue-infinite-loading";
 
 //components
 import Kweet from "@/components/Kweet/Kweet.vue";
+import KweetService from "@/services/kweetService";
 
 @Component({ components: { Kweet, InfiniteLoading } })
 export default class KweetContainer extends Vue {
-	//TODO: type
+	private error: string = "";
+
 	@Prop()
-	propKweets: any[];
+	profileId: string;
 
 	private tab: number = 1;
 	changeTab(index: number) {
@@ -55,16 +66,45 @@ export default class KweetContainer extends Vue {
 	}
 
 	get kweets() {
-		return this.propKweets;
+		return this.$store.getters["kweetModule/getKweets"];
 	}
 
 	get mentionKweets() {
-		return this.propKweets;
+		//TODO mentionKweets
+		return this.$store.getters["kweetModule/getKweets"];
+	}
+
+	get morePages() {
+		const pagination: { skip: number; count: number } = this.$store.getters[
+			"kweetModule/getPagination"
+		];
+		return pagination.count > pagination.skip;
+	}
+
+	created() {
+		this.$store.dispatch("kweetModule/resetPagination");
+		KweetService.getKweetsByProfileId(this.profileId)
+			.then((res: any) => {
+				this.error = "";
+			})
+			.catch((err: { message: string }) => {
+				this.error = err.message;
+			});
 	}
 
 	getMoreKweets($state) {
-		console.log($state);
-		// TODO load more
+		this.$store.dispatch("kweetModule/pageUp");
+		if (!this.morePages) $state.complete();
+		else {
+			KweetService.getKweetsByProfileId(this.profileId)
+				.then(() => {
+					this.error = "";
+					$state.loaded();
+				})
+				.catch((err: { message: string }) => {
+					this.error = err.message;
+				});
+		}
 	}
 }
 </script>
