@@ -7,16 +7,19 @@ const ls = new SecureLS({ encodingType: "aes", isCompression: false });
 //modules
 import authModule from "./authModule";
 import profileModule from "./profileModule";
+import kweetModule from "./kweetModule";
 
 //state
 import { state as authState } from "./authModule";
 import { state as profileState } from "./profileModule";
+import { state as kweetState } from "./kweetModule";
 
 Vue.use(Vuex);
 
 const defaultState = {
 	authModule: authState,
-	profileModule: profileState
+	profileModule: profileState,
+	kweetModule: kweetState
 };
 
 export default new Vuex.Store({
@@ -30,7 +33,7 @@ export default new Vuex.Store({
 			}
 		})
 	],
-	modules: { authModule, profileModule },
+	modules: { authModule, profileModule, kweetModule },
 	mutations: {
 		CLEAR_STATE(state: any) {
 			const newState = { authModule: {}, profileModule: {} };
@@ -39,6 +42,9 @@ export default new Vuex.Store({
 			});
 			Object.keys(profileState).forEach(key => {
 				newState["profileModule"][key] = null;
+			});
+			Object.keys(kweetState).forEach(key => {
+				newState["kweetModule"][key] = null;
 			});
 			Object.assign(state, newState);
 		}

@@ -32,16 +32,18 @@
 		<div v-if="tab === 1" class="container__items">
 			<Kweet v-for="kweet in kweets" :key="kweet.id" :propKweet="kweet" />
 		</div>
+		<infinite-loading @infinite="getMoreKweets"></infinite-loading>
 	</div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
+import InfiniteLoading from "vue-infinite-loading";
 
 //components
 import Kweet from "@/components/Kweet/Kweet.vue";
 
-@Component({ components: { Kweet } })
+@Component({ components: { Kweet, InfiniteLoading } })
 export default class KweetContainer extends Vue {
 	//TODO: type
 	@Prop()
@@ -58,6 +60,11 @@ export default class KweetContainer extends Vue {
 
 	get mentionKweets() {
 		return this.propKweets;
+	}
+
+	getMoreKweets($state) {
+		console.log($state);
+		// TODO load more
 	}
 }
 </script>

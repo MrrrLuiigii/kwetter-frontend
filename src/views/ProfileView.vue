@@ -1,6 +1,6 @@
 <template>
 	<div class="profile">
-		<KweetContainer class="profile__left" :propKweets="profile.kweets" />
+		<KweetContainer class="profile__left" :propKweets="kweets" />
 		<div class="profile__right">
 			<ProfileContainer :propProfile="profile" />
 			<FollowContainer
@@ -21,6 +21,7 @@ import FollowContainer from "@/components/Follow/FollowContainer.vue";
 
 //services
 import ProfileService from "@/services/profileService";
+import KweetService from "@/services/kweetService";
 
 @Component({
 	components: { KweetContainer, ProfileContainer, FollowContainer }
@@ -32,12 +33,24 @@ export default class ProfileView extends Vue {
 		return this.$store.getters.getProfile;
 	}
 
-	created() {
-		ProfileService.getProfile(this.$route.params.id)
+	get kweets() {
+		return this.$store.getters["kweetModule/getKweets"];
+	}
+
+	beforeMount() {
+		const profileId: string = this.$route.params.id;
+		ProfileService.getProfile(profileId)
 			.then((res: any) => {
 				this.error = "";
+				KweetService.getKweetsByProfileId(this.profile.id)
+					.then((res: any) => {
+						this.error = "";
+					})
+					.catch((err: { message: string }) => {
+						this.error = err.message;
+					});
 			})
-			.catch((err: any) => {
+			.catch((err: { message: string }) => {
 				this.error = err.message;
 			});
 	}
