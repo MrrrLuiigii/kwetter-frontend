@@ -52,7 +52,6 @@ export default class ProfileView extends Vue {
 
 	&__left {
 		width: 60%;
-		height: 85vh;
 		margin-right: 1em;
 	}
 

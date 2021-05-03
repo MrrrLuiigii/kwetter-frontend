@@ -71,7 +71,7 @@ export default class FollowContainer extends Vue {
 	border: 4px solid color(app-font);
 	border-radius: $border-radius;
 	margin-top: 1em;
-	height: 42.2em;
+	height: calc(42vh - 4px);
 
 	&__header {
 		display: flex;

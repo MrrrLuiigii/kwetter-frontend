@@ -70,6 +70,7 @@ export default class KweetContainer extends Vue {
 	padding: 1em;
 	border: 4px solid color(app-font);
 	border-radius: $border-radius;
+	height: 85vh;
 
 	&__header {
 		display: flex;

@@ -10,7 +10,8 @@
 				/>
 			</div>
 			<div class="container__general__info">
-				<h1>{{ profile.name }}</h1>
+				<h1>{{ profile.username }}</h1>
+				<p>Name: {{ profile.name }}</p>
 				<p>Web: {{ profile.web }}</p>
 				<div>
 					Trends:
@@ -50,10 +51,7 @@ export default class ProfileContainer extends Vue {
 .container {
 	position: relative;
 	padding: 1em;
-
-	min-height: 20em;
-	min-width: 40em;
-
+	height: calc(42vh - 4px);
 	border: 4px solid color(app-font);
 	border-radius: $border-radius;
 
