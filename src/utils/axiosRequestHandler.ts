@@ -22,23 +22,10 @@ class AxiosRequestHandler {
 		} else if (this.api) delete this.api.defaults.headers["Authorization"];
 	}
 
-	public static get(
-		url: string,
-		pagination?: { skip: number; take: number }
-	): any {
+	public static get(url: string, params?: object): any {
 		this.getAuthHeaders();
 		return this.api
-			.get(
-				url,
-				pagination
-					? {
-							params: {
-								skip: pagination.skip,
-								take: pagination.take
-							}
-					  }
-					: {}
-			)
+			.get(url, params ? { params: params } : {})
 			.then((res: AxiosResponse) => {
 				if (!this.checkResponseOK(res))
 					throw this.checkStatusCode(res.status, res.data);

@@ -1,6 +1,6 @@
 import AuthVM from "./auth.viewmodel";
 
-interface ProfileVM {
+export interface ProfileVM {
 	id: string;
 	user: AuthVM;
 	name: string;
@@ -14,4 +14,9 @@ interface ProfileVM {
 	trends: any[];
 }
 
-export default ProfileVM;
+export interface ProfileSearchVM {
+	id: string;
+	username: string;
+	name: string;
+	following: boolean;
+}

@@ -7,11 +7,23 @@ class ProfileService {
 	private static serviceUrl = "/profile";
 
 	public static getProfile(id?: string) {
-		const url: string = (this.serviceUrl += id ? `/${id}` : "");
+		const url: string = `${this.serviceUrl}/id${id ? `/${id}` : ""}`;
 		return AxiosRequestHandler.get(url)
 			.then((res: AxiosResponse) => {
 				store.dispatch("saveProfile", res.data);
 				return res;
+			})
+			.catch((err: any) => {
+				throw err;
+			});
+	}
+
+	public static getProfiles(username: string) {
+		const url: string = this.serviceUrl;
+		const params = { username };
+		return AxiosRequestHandler.get(url, params)
+			.then((res: AxiosResponse) => {
+				return res.data;
 			})
 			.catch((err: any) => {
 				throw err;

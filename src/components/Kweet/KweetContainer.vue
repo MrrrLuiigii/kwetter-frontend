@@ -32,7 +32,7 @@
 				v-if="morePages"
 				@infinite="getMoreKweets"
 			></infinite-loading>
-			<div v-else>No more Kweets...</div>
+			<div v-else-if="mentionKweets.length > 0">No more Kweets...</div>
 		</div>
 		<div v-if="tab === 1" class="container__items">
 			<Kweet v-for="kweet in kweets" :key="kweet.id" :propKweet="kweet" />
@@ -40,13 +40,13 @@
 				v-if="morePages"
 				@infinite="getMoreKweets"
 			></infinite-loading>
-			<div v-else>No more Kweets...</div>
+			<div v-else-if="kweets.length > 0">No more Kweets...</div>
 		</div>
 	</div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import InfiniteLoading from "vue-infinite-loading";
 
 //components
@@ -82,8 +82,12 @@ export default class KweetContainer extends Vue {
 	}
 
 	created() {
+		this.getInitialKweets();
+	}
+
+	getInitialKweets(id?: string) {
 		this.$store.dispatch("kweetModule/resetPagination");
-		KweetService.getKweetsByProfileId(this.profileId)
+		KweetService.getKweetsByProfileId(id ? id : this.profileId)
 			.then((res: any) => {
 				this.error = "";
 			})
@@ -92,11 +96,14 @@ export default class KweetContainer extends Vue {
 			});
 	}
 
-	getMoreKweets($state) {
+	getMoreKweets($state: { complete: () => void; loaded: () => void }) {
+		const profileId: string = this.$route.params.id
+			? this.$route.params.id
+			: this.profileId;
 		this.$store.dispatch("kweetModule/pageUp");
 		if (!this.morePages) $state.complete();
 		else {
-			KweetService.getKweetsByProfileId(this.profileId)
+			KweetService.getKweetsByProfileId(profileId)
 				.then(() => {
 					this.error = "";
 					$state.loaded();
@@ -105,6 +112,11 @@ export default class KweetContainer extends Vue {
 					this.error = err.message;
 				});
 		}
+	}
+
+	@Watch("$route.params.id")
+	onPropertyChanged(value: string) {
+		this.getInitialKweets(value);
 	}
 }
 </script>

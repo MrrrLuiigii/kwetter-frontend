@@ -4,11 +4,7 @@
 			<div class="header__container">
 				<div class="header__container__bar">
 					<h1 class="header__container__bar__title">Kwetter</h1>
-					<input
-						class="header__container__bar__search input-primary"
-						type="text"
-						placeholder="Search..."
-					/>
+					<SearchProfileInput class="header__container__bar__search" />
 					<fa-icon
 						class="header__container__bar__feather feather-no-stroke"
 						:icon="['fas', 'feather-alt']"
@@ -108,10 +104,13 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
+//components
+import SearchProfileInput from "@/components/SearchProfileInput.vue";
+
 //viewmodels
 import AuthVM from "@/models/viewmodels/auth.viewmodel";
 
-@Component
+@Component({ components: { SearchProfileInput } })
 export default class Navigation extends Vue {
 	private drawer: boolean = false;
 

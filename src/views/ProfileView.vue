@@ -1,6 +1,6 @@
 <template>
 	<div class="profile">
-		<KweetContainer class="profile__left" :profileId="profile.id" />
+		<KweetContainer class="profile__left" :profileId="profileId" />
 		<div class="profile__right">
 			<ProfileContainer :propProfile="profile" />
 			<FollowContainer
@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 
 //components
 import KweetContainer from "@/components/Kweet/KweetContainer.vue";
@@ -32,7 +32,17 @@ export default class ProfileView extends Vue {
 		return this.$store.getters.getProfile;
 	}
 
+	get profileId() {
+		return this.$route.params.id
+			? this.$route.params.id
+			: this.$store.getters.getProfile;
+	}
+
 	created() {
+		this.getProfile();
+	}
+
+	getProfile() {
 		const profileId: string = this.$route.params.id;
 		ProfileService.getProfile(profileId)
 			.then((res: any) => {
@@ -41,6 +51,11 @@ export default class ProfileView extends Vue {
 			.catch((err: { message: string }) => {
 				this.error = err.message;
 			});
+	}
+
+	@Watch("$route.params.id")
+	onPropertyChanged() {
+		this.getProfile();
 	}
 }
 </script>

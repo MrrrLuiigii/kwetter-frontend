@@ -9,17 +9,17 @@ import authModule from "./authModule";
 import profileModule from "./profileModule";
 import kweetModule from "./kweetModule";
 
-//state
-import { state as authState } from "./authModule";
-import { state as profileState } from "./profileModule";
-import { state as kweetState } from "./kweetModule";
+//defaultState
+import { defaultState as authDefaultState } from "./authModule";
+import { defaultState as profileDefaultState } from "./profileModule";
+import { defaultState as kweetDefaultState } from "./kweetModule";
 
 Vue.use(Vuex);
 
 const defaultState = {
-	authModule: authState,
-	profileModule: profileState,
-	kweetModule: kweetState
+	authModule: authDefaultState,
+	profileModule: profileDefaultState,
+	kweetModule: kweetDefaultState
 };
 
 export default new Vuex.Store({
@@ -36,17 +36,7 @@ export default new Vuex.Store({
 	modules: { authModule, profileModule, kweetModule },
 	mutations: {
 		CLEAR_STATE(state: any) {
-			const newState = { authModule: {}, profileModule: {} };
-			Object.keys(authState).forEach(key => {
-				newState["authModule"][key] = null;
-			});
-			Object.keys(profileState).forEach(key => {
-				newState["profileModule"][key] = null;
-			});
-			Object.keys(kweetState).forEach(key => {
-				newState["kweetModule"][key] = null;
-			});
-			Object.assign(state, newState);
+			Object.assign(state, defaultState);
 		}
 	},
 	actions: {

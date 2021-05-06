@@ -1,6 +1,13 @@
 import KweetVM from "@/models/viewmodels/kweet.viewmodel";
 
-export const state = {
+export const defaultState = {
+	skip: 0,
+	take: 10,
+	count: 0,
+	kweets: []
+};
+
+const state = {
 	skip: 0,
 	take: 10,
 	count: 0,
@@ -13,7 +20,7 @@ export default {
 	mutations: {
 		RESET_PAGINATION(state: any) {
 			state.skip = 0;
-			state.take = 4;
+			state.take = 10;
 			state.count = 0;
 			state.kweets = [];
 		},

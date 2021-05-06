@@ -1,6 +1,10 @@
 import AuthVM from "@/models/viewmodels/auth.viewmodel";
 
-export const state = {
+export const defaultState = {
+	user: null
+};
+
+const state = {
 	user: null
 };
 

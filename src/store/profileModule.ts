@@ -1,6 +1,10 @@
-import ProfileVM from "@/models/viewmodels/profile.viewmodel";
+import { ProfileVM } from "@/models/viewmodels/profile.viewmodel";
 
-export const state = {
+export const defaultState = {
+	profile: null
+};
+
+const state = {
 	profile: null
 };
 
