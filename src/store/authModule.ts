@@ -9,7 +9,7 @@ const state = {
 };
 
 export default {
-	// namespaced: true,
+	namespaced: true,
 	state,
 	mutations: {
 		SAVE_USER(state: any, user: AuthVM) {

@@ -9,7 +9,7 @@ class AuthService {
 
 		return AxiosRequestHandler.post(url, registerRequest)
 			.then((res: AxiosResponse) => {
-				store.dispatch("saveUser", res.data);
+				store.dispatch("authModule/saveUser", res.data);
 				return res;
 			})
 			.catch((err: any) => {
@@ -22,7 +22,7 @@ class AuthService {
 
 		return AxiosRequestHandler.post(url, loginRequest)
 			.then((res: AxiosResponse) => {
-				store.dispatch("saveUser", res.data);
+				store.dispatch("authModule/saveUser", res.data);
 				return res;
 			})
 			.catch((err: any) => {
@@ -35,7 +35,7 @@ class AuthService {
 
 		return AxiosRequestHandler.patch(url, {})
 			.then((res: AxiosResponse) => {
-				store.dispatch("saveUser", res.data);
+				store.dispatch("authModule/saveUser", res.data);
 				return res;
 			})
 			.catch((err: any) => {
@@ -44,7 +44,7 @@ class AuthService {
 	}
 
 	public static validate() {
-		if (store.getters.getUser) {
+		if (store.getters["authModule/getUser"]) {
 			const url: string = "auth/validate";
 			return AxiosRequestHandler.get(url);
 		}

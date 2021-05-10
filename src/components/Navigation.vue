@@ -115,7 +115,7 @@ export default class Navigation extends Vue {
 	private drawer: boolean = false;
 
 	get user(): AuthVM {
-		return this.$store.getters.getUser;
+		return this.$store.getters["authModule/getUser"];
 	}
 
 	logout() {

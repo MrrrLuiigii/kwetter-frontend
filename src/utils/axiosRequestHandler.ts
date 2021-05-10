@@ -15,8 +15,8 @@ class AxiosRequestHandler {
 	});
 
 	private static getAuthHeaders() {
-		if (store.getters.getUser) {
-			const authHeaders = "Bearer " + store.getters.getUser.token;
+		if (store.getters["authModule/getUser"]) {
+			const authHeaders = "Bearer " + store.getters["authModule/getUser"].token;
 			if (this.api) this.api.defaults.headers["Authorization"] = authHeaders;
 			return authHeaders;
 		} else if (this.api) delete this.api.defaults.headers["Authorization"];

@@ -49,8 +49,10 @@
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import InfiniteLoading from "vue-infinite-loading";
 
-//components
+//models
 import Kweet from "@/components/Kweet/Kweet.vue";
+
+//services
 import KweetService from "@/services/kweetService";
 
 @Component({ components: { Kweet, InfiniteLoading } })

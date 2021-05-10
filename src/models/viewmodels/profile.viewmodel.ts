@@ -7,7 +7,7 @@ export interface ProfileVM {
 	web: string;
 	bio: string;
 	followers: any[];
-	followed: any[];
+	following: any[];
 	likes: any[];
 	mentions: any[];
 	kweets: any[];
@@ -19,4 +19,12 @@ export interface ProfileSearchVM {
 	username: string;
 	name: string;
 	following: boolean;
+}
+
+export interface ProfileMinVM {
+	id: string;
+	username: string;
+	name: string;
+	web: string;
+	bio: string;
 }

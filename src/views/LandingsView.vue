@@ -71,9 +71,9 @@ export default class LandingsView extends Vue {
 
 	//TODO: type
 	get user(): any {
-		const user = this.$store.getters.getUser;
+		const user = this.$store.getters["authModule/getUser"];
 		if (!user || user.status === AccountStatus.Pending) return undefined;
-		return this.$store.getters.getUser;
+		return this.$store.getters["authModule/getUser"];
 	}
 
 	register(username: string) {

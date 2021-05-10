@@ -3,10 +3,7 @@
 		<KweetContainer class="profile__left" :profileId="profileId" />
 		<div class="profile__right">
 			<ProfileContainer :propProfile="profile" />
-			<FollowContainer
-				:propFollowers="profile.followers"
-				:propFollowed="profile.followed"
-			/>
+			<FollowContainer :profileId="profileId" />
 		</div>
 	</div>
 </template>
@@ -29,13 +26,13 @@ export default class ProfileView extends Vue {
 	private error: string = "";
 
 	get profile() {
-		return this.$store.getters.getProfile;
+		return this.$store.getters["profileModule/getProfile"];
 	}
 
 	get profileId() {
 		return this.$route.params.id
 			? this.$route.params.id
-			: this.$store.getters.getProfile;
+			: this.$store.getters["profileModule/getProfile"].id;
 	}
 
 	created() {
@@ -43,8 +40,7 @@ export default class ProfileView extends Vue {
 	}
 
 	getProfile() {
-		const profileId: string = this.$route.params.id;
-		ProfileService.getProfile(profileId)
+		ProfileService.getProfile(this.profileId)
 			.then((res: any) => {
 				this.error = "";
 			})

@@ -55,7 +55,7 @@ const router = new Router({
  * Router authorisation
  */
 router.beforeEach((to, from, next) => {
-	const user = store.getters.getUser;
+	const user = store.getters["authModule/getUser"];
 	const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
 	if (requiresAuth && !user) return next({ name: "Landingspage" });

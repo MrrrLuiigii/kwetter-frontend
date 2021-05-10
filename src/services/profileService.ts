@@ -10,7 +10,7 @@ class ProfileService {
 		const url: string = `${this.serviceUrl}/id${id ? `/${id}` : ""}`;
 		return AxiosRequestHandler.get(url)
 			.then((res: AxiosResponse) => {
-				store.dispatch("saveProfile", res.data);
+				store.dispatch("profileModule/saveProfile", res.data);
 				return res;
 			})
 			.catch((err: any) => {
@@ -33,7 +33,7 @@ class ProfileService {
 	public static createProfile(createProfileRequest: CreateProfileRequest) {
 		return AxiosRequestHandler.post(this.serviceUrl, createProfileRequest)
 			.then((res: AxiosResponse) => {
-				store.dispatch("saveProfile", res.data);
+				store.dispatch("profileModule/saveProfile", res.data);
 				return res;
 			})
 			.catch((err: any) => {

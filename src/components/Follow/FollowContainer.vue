@@ -11,7 +11,7 @@
 					:icon="['fas', 'feather-alt']"
 				/>
 				<div class="container__header__tab__name">
-					Followers ({{ followers ? followers.length : 0 }})
+					Followers ({{ profile.followers ? profile.followers.length : 0 }})
 				</div>
 			</div>
 			<div
@@ -24,15 +24,15 @@
 					:icon="['fas', 'feather-alt']"
 				/>
 				<div class="container__header__tab__name">
-					Followed ({{ followed ? followed.length : 0 }})
+					Following ({{ profile.following ? profile.following.length : 0 }})
 				</div>
 			</div>
 		</div>
 		<div v-if="tab === 0" class="container__items">
-			followers: {{ followers }}
+			followers: {{ profile.followers }}
 		</div>
 		<div v-if="tab === 1" class="container__items">
-			followed: {{ followed }}
+			following: {{ profile.following }}
 		</div>
 	</div>
 </template>
@@ -40,24 +40,38 @@
 <script lang="ts">
 import { Component, Vue, Prop } from "vue-property-decorator";
 
+//services
+import FollowService from "@/services/followService";
+
 @Component
 export default class FollowContainer extends Vue {
-	//TODO: type
-	@Prop()
-	propFollowers: any[];
-	propFollowed: any[];
+	private error: string;
 
 	private tab: number = 1;
 	changeTab(index: number) {
 		this.tab = index;
 	}
 
-	get followers() {
-		return this.propFollowers;
+	@Prop()
+	profileId: string;
+
+	get profile() {
+		return this.$store.getters["profileModule/getProfile"];
 	}
 
-	get followed() {
-		return this.propFollowed;
+	created() {
+		this.getInitialFollows();
+	}
+
+	getInitialFollows(id?: string) {
+		console.log("GETFOLLOWS");
+		FollowService.getFollowsByProfileId(id ? id : this.profileId)
+			.then((res: any) => {
+				this.error = "";
+			})
+			.catch((err: { message: string }) => {
+				this.error = err.message;
+			});
 	}
 }
 </script>

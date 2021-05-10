@@ -13,7 +13,7 @@ import AuthVM from "@/models/viewmodels/auth.viewmodel";
 @Component
 export default class HomeView extends Vue {
 	get user(): AuthVM {
-		return this.$store.getters.getUser;
+		return this.$store.getters["authModule/getUser"];
 	}
 }
 </script>

@@ -21,7 +21,7 @@ import AuthService from "@/services/authService";
 @Component
 export default class VerifyView extends Vue {
 	get user(): AuthVM {
-		return this.$store.getters.getUser;
+		return this.$store.getters["authModule/getUser"];
 	}
 
 	created() {
