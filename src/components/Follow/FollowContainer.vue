@@ -38,7 +38,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 
 //services
 import FollowService from "@/services/followService";
@@ -72,6 +72,11 @@ export default class FollowContainer extends Vue {
 			.catch((err: { message: string }) => {
 				this.error = err.message;
 			});
+	}
+
+	@Watch("$route.params.id")
+	onPropertyChanged(value: string) {
+		this.getInitialFollows(value);
 	}
 }
 </script>
