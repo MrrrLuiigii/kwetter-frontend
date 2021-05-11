@@ -32,7 +32,12 @@
 <script lang="ts">
 import FeatherBackground from "@/components/FeatherBackground.vue";
 import { Component, Vue } from "vue-property-decorator";
+
+//services
 import AuthService from "@/services/authService";
+import ProfileService from "@/services/profileService";
+
+//models
 import { LoginRequest } from "@/models/dto/auth.dto";
 
 @Component({ components: { FeatherBackground } })
@@ -53,7 +58,16 @@ export default class Login extends Vue {
 		AuthService.login(this.loginRequest)
 			.then((res: any) => {
 				this.error = "";
-				this.$router.replace({ name: "Home" });
+
+				ProfileService.getProfile()
+					.then((res: any) => {
+						this.error = "";
+						this.$store.dispatch("authModule/linkProfile", res.data.id);
+						this.$router.replace({ name: "Home" });
+					})
+					.catch((err: { message: string }) => {
+						this.error = err.message;
+					});
 			})
 			.catch((err: { message: string }) => {
 				this.error = err.message || "Whoops... Something went wrong...";

@@ -33,9 +33,7 @@ export default class ProfileView extends Vue {
 		if (this.$route.params.id) return this.$route.params.id;
 
 		const user = this.$store.getters["authModule/getUser"];
-		const profile = this.$store.getters["profileModule/getProfile"];
-		if (user && profile && user.username === profile.username)
-			return profile.id;
+		if (user && user.profileId) return user.profileId;
 
 		return undefined;
 	}

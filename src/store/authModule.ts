@@ -14,6 +14,9 @@ export default {
 	mutations: {
 		SAVE_USER(state: any, user: AuthVM) {
 			state.user = user;
+		},
+		LINK_PROFILE(state: any, profileId: string) {
+			state.user = { ...state.user, profileId };
 		}
 	},
 	getters: {
@@ -24,6 +27,9 @@ export default {
 	actions: {
 		saveUser({ commit }: any, user: AuthVM) {
 			commit("SAVE_USER", user);
+		},
+		linkProfile({ commit }: any, profileId: string) {
+			commit("LINK_PROFILE", profileId);
 		}
 	}
 };

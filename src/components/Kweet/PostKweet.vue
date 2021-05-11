@@ -23,12 +23,19 @@
 				placeholder="Trend..."
 			/>
 		</div>
-		<textarea
-			v-model.trim="kweet.body"
-			class="input-body input-primary"
-			placeholder="Place a Kweet..."
-		/>
-		<button class="button-primary" @click="placeKweet">Place Kweet</button>
+		<div class="body">
+			<textarea
+				v-model.trim="kweet.body"
+				maxlength="140"
+				class="input-body input-primary"
+				placeholder="Place a Kweet..."
+			/>
+			<span class="body__length">({{ kweet.body.length }}/140)</span>
+		</div>
+
+		<button class="button-primary post-button" @click="placeKweet">
+			Place Kweet
+		</button>
 	</div>
 </template>
 
@@ -83,21 +90,22 @@ export default class PostKweet extends Vue {
 		if (this.kweet.body === "")
 			return (this.error = "You can not place an empty Kweet...");
 
+		this.kweet.body.trim();
+		this.kweet.body = this.kweet.body.replace(/[\r\n\v]+/g, " ");
 		KweetService.postKweet(this.kweet)
 			.then((res: any) => {
 				this.error = "";
+				this.trend = "";
+				this.kweet = {
+					profileId: this.$store.getters["profileModule/getProfile"].id,
+					body: "",
+					trends: [],
+					mentions: []
+				};
 			})
 			.catch((err: { message: string }) => {
 				this.error = err.message;
 			});
-
-		this.kweet = {
-			profileId: this.$store.getters["profileModule/getProfile"].id,
-			body: "",
-			trends: [],
-			mentions: []
-		};
-		this.trend = "";
 	}
 }
 </script>
@@ -131,6 +139,19 @@ export default class PostKweet extends Vue {
 		flex-wrap: wrap;
 		justify-content: flex-start;
 		width: 100%;
+	}
+}
+
+.body {
+	position: relative;
+
+	&__length {
+		position: absolute;
+		bottom: 1.25em;
+		right: 1.25em;
+		padding: 0.1em;
+		background-color: color(app-gray);
+		border-radius: $border-radius-small;
 	}
 }
 
