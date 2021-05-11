@@ -18,6 +18,20 @@ class KweetService {
 				throw err;
 			});
 	}
+
+	public static getFeedByProfileId(profileId: string) {
+		const params: { skip: number; take: number } =
+			store.getters["kweetModule/getPagination"];
+		const url: string = `${this.serviceUrl}/feed/${profileId}`;
+		return AxiosRequestHandler.get(url, params)
+			.then((res: AxiosResponse) => {
+				store.dispatch("kweetModule/saveKweets", res.data);
+				return res;
+			})
+			.catch((err: any) => {
+				throw err;
+			});
+	}
 }
 
 export default KweetService;

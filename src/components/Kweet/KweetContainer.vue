@@ -2,6 +2,7 @@
 	<div class="container">
 		<div class="container__header">
 			<div
+				v-if="!isFeed"
 				class="container__header__tab"
 				@click="changeTab(0)"
 				:inactive="tab === 1"
@@ -62,6 +63,9 @@ export default class KweetContainer extends Vue {
 	@Prop()
 	profileId: string;
 
+	@Prop({ default: false })
+	isFeed: boolean;
+
 	private tab: number = 1;
 	changeTab(index: number) {
 		this.tab = index;
@@ -84,6 +88,9 @@ export default class KweetContainer extends Vue {
 	}
 
 	created() {
+		if (this.isFeed) {
+			return this.getInitialFeed();
+		}
 		this.getInitialKweets();
 	}
 
@@ -116,9 +123,38 @@ export default class KweetContainer extends Vue {
 		}
 	}
 
+	getInitialFeed(id?: string) {
+		this.$store.dispatch("kweetModule/resetPagination");
+		KweetService.getFeedByProfileId(id ? id : this.profileId)
+			.then((res: any) => {
+				this.error = "";
+			})
+			.catch((err: { message: string }) => {
+				this.error = err.message;
+			});
+	}
+
+	getMoreFeed($state: { complete: () => void; loaded: () => void }) {
+		const profileId: string = this.$route.params.id
+			? this.$route.params.id
+			: this.profileId;
+		this.$store.dispatch("kweetModule/pageUp");
+		if (!this.morePages) $state.complete();
+		else {
+			KweetService.getFeedByProfileId(profileId)
+				.then(() => {
+					this.error = "";
+					$state.loaded();
+				})
+				.catch((err: { message: string }) => {
+					this.error = err.message;
+				});
+		}
+	}
+
 	@Watch("$route.params.id")
 	onPropertyChanged(value: string) {
-		this.getInitialKweets(value);
+		if (!this.isFeed) this.getInitialKweets(value);
 	}
 }
 </script>
