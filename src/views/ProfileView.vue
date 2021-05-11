@@ -1,8 +1,8 @@
 <template>
-	<div class="profile">
+	<div v-if="profile" class="profile">
 		<KweetContainer class="profile__left" :profileId="profileId" />
 		<div class="profile__right">
-			<ProfileContainer :propProfile="profile" />
+			<ProfileContainer />
 			<FollowContainer :profileId="profileId" />
 		</div>
 	</div>
@@ -32,7 +32,9 @@ export default class ProfileView extends Vue {
 	get profileId() {
 		return this.$route.params.id
 			? this.$route.params.id
-			: this.$store.getters["profileModule/getProfile"].id;
+			: this.$store.getters["profileModule/getProfile"]
+			? this.$store.getters["profileModule/getProfile"].id
+			: undefined;
 	}
 
 	created() {

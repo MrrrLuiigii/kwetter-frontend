@@ -34,13 +34,8 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 export default class ProfileContainer extends Vue {
 	private error: string = "";
 
-	//TODO: type
-	@Prop()
-	propProfile: any;
-	// propProfile: GeneralProfileInfo;
-
 	get profile() {
-		return this.propProfile;
+		return this.$store.getters["profileModule/getProfile"];
 	}
 }
 </script>
