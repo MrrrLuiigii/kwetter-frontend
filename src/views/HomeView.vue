@@ -1,7 +1,9 @@
 <template>
 	<div v-if="user && profileId" class="home">
 		<KweetContainer :isFeed="true" :profileId="profileId" class="home__left" />
-		<div class="home__right"></div>
+		<div class="home__right">
+			<PostKweet />
+		</div>
 	</div>
 </template>
 
@@ -10,11 +12,12 @@ import { Component, Vue } from "vue-property-decorator";
 
 //components
 import KweetContainer from "@/components/Kweet/KweetContainer.vue";
+import PostKweet from "@/components/Kweet/PostKweet.vue";
 
 //models
 import AuthVM from "@/models/viewmodels/auth.viewmodel";
 
-@Component({ components: { KweetContainer } })
+@Component({ components: { KweetContainer, PostKweet } })
 export default class HomeView extends Vue {
 	get user(): AuthVM {
 		return this.$store.getters["authModule/getUser"];

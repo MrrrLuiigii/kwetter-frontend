@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios";
 import store from "@/store";
 import AxiosRequestHandler from "@/utils/axiosRequestHandler";
+import { PostKweetRequest } from "@/models/dto/kweet.dto";
 
 class KweetService {
 	private static serviceUrl = "/kweet";
@@ -26,6 +27,17 @@ class KweetService {
 		return AxiosRequestHandler.get(url, params)
 			.then((res: AxiosResponse) => {
 				store.dispatch("kweetModule/saveKweets", res.data);
+				return res;
+			})
+			.catch((err: any) => {
+				throw err;
+			});
+	}
+
+	public static postKweet(kweet: PostKweetRequest) {
+		return AxiosRequestHandler.post(this.serviceUrl, kweet)
+			.then((res: AxiosResponse) => {
+				//TODO store kweet
 				return res;
 			})
 			.catch((err: any) => {
