@@ -1,5 +1,5 @@
 <template>
-	<div v-if="profile" class="profile">
+	<div v-if="profileId" class="profile">
 		<KweetContainer class="profile__left" :profileId="profileId" />
 		<div class="profile__right">
 			<ProfileContainer />
@@ -30,11 +30,14 @@ export default class ProfileView extends Vue {
 	}
 
 	get profileId() {
-		return this.$route.params.id
-			? this.$route.params.id
-			: this.$store.getters["profileModule/getProfile"]
-			? this.$store.getters["profileModule/getProfile"].id
-			: undefined;
+		if (this.$route.params.id) return this.$route.params.id;
+
+		const user = this.$store.getters["authModule/getUser"];
+		const profile = this.$store.getters["profileModule/getProfile"];
+		if (user && profile && user.username === profile.username)
+			return profile.id;
+
+		return undefined;
 	}
 
 	created() {
