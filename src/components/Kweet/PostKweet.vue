@@ -120,7 +120,6 @@ export default class PostKweet extends Vue {
 	padding: 1em;
 	border: 4px solid color(app-font);
 	border-radius: $border-radius;
-	height: calc(42vh - 4px);
 	text-align: left;
 	gap: 1em;
 

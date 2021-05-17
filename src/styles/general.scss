@@ -8,11 +8,38 @@
 	height: 3em;
 }
 
-.button-alt {
+.button-primary-small {
+	background-color: color(app-primary);
+	border: 5px solid color(app-font);
+	border-radius: $border-radius;
+	width: 150px;
+	height: 2em;
+}
+
+.button-alt,
+.button-accent {
 	border: 5px solid color(app-font);
 	border-radius: $border-radius;
 	width: 200px;
 	height: 3em;
+}
+
+.button-alt-small,
+.button-accent-small {
+	border: 5px solid color(app-font);
+	border-radius: $border-radius;
+	width: 150px;
+	height: 2em;
+}
+
+.button-accent:hover {
+	background-color: color(app-accent);
+	color: color(app-background);
+}
+
+.button-accent-small:hover {
+	background-color: color(app-accent);
+	color: color(app-background);
 }
 
 .input-primary {

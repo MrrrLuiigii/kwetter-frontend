@@ -71,6 +71,7 @@ export default class ProfileView extends Vue {
 	}
 
 	&__right {
+		//TODO: overflow-y
 		width: 40%;
 	}
 }

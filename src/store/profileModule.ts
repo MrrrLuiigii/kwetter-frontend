@@ -1,5 +1,5 @@
 import { FollowVM } from "@/models/viewmodels/follow.viewmodel";
-import { ProfileVM } from "@/models/viewmodels/profile.viewmodel";
+import { ProfileMinVM, ProfileVM } from "@/models/viewmodels/profile.viewmodel";
 
 export const defaultState = {
 	profile: null
@@ -22,6 +22,22 @@ export default {
 				following: follows.following,
 				followers: follows.followers
 			};
+		},
+		FOLLOW(state: any, profile: ProfileMinVM) {
+			const followers = state.profile.followers ? state.profile.followers : [];
+			followers.push(profile);
+			state.profile = {
+				...state.profile,
+				followers
+			};
+		},
+		UNFOLLOW(state: any, profileId: string) {
+			state.profile = {
+				...state.profile,
+				followers: state.profile.following.filter(
+					(f: ProfileMinVM) => f.id !== profileId
+				)
+			};
 		}
 	},
 	getters: {
@@ -35,6 +51,12 @@ export default {
 		},
 		saveFollows({ commit }: any, follows: FollowVM) {
 			commit("SAVE_FOLLOWS", follows);
+		},
+		follow({ commit }: any, { follower }) {
+			commit("FOLLOW", follower);
+		},
+		unfollow({ commit }: any, { followerId }) {
+			commit("UNFOLLOW", followerId);
 		}
 	}
 };

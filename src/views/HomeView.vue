@@ -46,6 +46,7 @@ export default class HomeView extends Vue {
 	}
 
 	&__right {
+		//TODO: overflow-y
 		width: 40%;
 	}
 }

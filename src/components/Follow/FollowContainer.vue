@@ -64,7 +64,6 @@ export default class FollowContainer extends Vue {
 	}
 
 	getInitialFollows(id?: string) {
-		console.log("GETFOLLOWS");
 		FollowService.getFollowsByProfileId(id ? id : this.profileId)
 			.then((res: any) => {
 				this.error = "";
@@ -90,7 +89,6 @@ export default class FollowContainer extends Vue {
 	border: 4px solid color(app-font);
 	border-radius: $border-radius;
 	margin-top: 1em;
-	height: calc(42vh - 4px);
 
 	&__header {
 		display: flex;
@@ -118,8 +116,6 @@ export default class FollowContainer extends Vue {
 		padding-right: 0.5em;
 		display: flex;
 		flex-direction: column;
-		height: calc(99% - 2em);
-		overflow-y: auto;
 		gap: 1em;
 	}
 
