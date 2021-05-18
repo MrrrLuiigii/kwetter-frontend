@@ -1,5 +1,5 @@
 <template>
-	<div class="kweet-card">
+	<div v-if="kweet" class="kweet-card">
 		<div class="profile">
 			<div class="profile__frame">
 				<img
@@ -39,14 +39,10 @@ import TrendChip from "@/components/TrendChip.vue";
 export default class Kweet extends Vue {
 	//TODO: type
 	@Prop()
-	propKweet: any;
-
-	get kweet() {
-		return this.propKweet;
-	}
+	kweet!: any;
 
 	get createdAt() {
-		const createdAt: string = this.propKweet.createdAt;
+		const createdAt: string = this.kweet.createdAt;
 		const dateArray = new Date(createdAt).toLocaleString().split(", ");
 		return [dateArray[1], dateArray[0]].join(" ");
 	}

@@ -29,10 +29,24 @@
 			</div>
 		</div>
 		<div v-if="tab === 0" class="container__items">
-			followers: {{ profile.followers }}
+			<Follow
+				v-for="follower in profile.followers"
+				:key="follower.id"
+				:follow="follower"
+			/>
+			<p v-if="profile.followers && profile.followers.length === 0">
+				You have no followers yet...
+			</p>
 		</div>
 		<div v-if="tab === 1" class="container__items">
-			following: {{ profile.following }}
+			<Follow
+				v-for="following in profile.following"
+				:key="following.id"
+				:follow="following"
+			/>
+			<p v-if="profile.following && profile.following.length === 0">
+				You not following anyone yet...
+			</p>
 		</div>
 	</div>
 </template>
@@ -40,10 +54,13 @@
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 
+//components
+import Follow from "@/components/Follow/Follow.vue";
+
 //services
 import FollowService from "@/services/followService";
 
-@Component
+@Component({ components: { Follow } })
 export default class FollowContainer extends Vue {
 	private error: string;
 
@@ -117,6 +134,8 @@ export default class FollowContainer extends Vue {
 		display: flex;
 		flex-direction: column;
 		gap: 1em;
+		max-height: 20em;
+		overflow-y: auto;
 	}
 
 	&__feather {
