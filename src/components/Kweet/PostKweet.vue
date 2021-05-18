@@ -25,6 +25,7 @@
 		</div>
 		<div class="body">
 			<textarea
+				@keypress="getMentions"
 				v-model.trim="kweet.body"
 				maxlength="140"
 				class="input-body input-primary"
@@ -57,6 +58,8 @@ export default class PostKweet extends Vue {
 
 	private trend: string = "";
 
+	private mentionActive: boolean = false;
+
 	private kweet: PostKweetRequest = {
 		profileId: this.$store.getters["profileModule/getProfile"].id,
 		body: "",
@@ -84,6 +87,13 @@ export default class PostKweet extends Vue {
 
 	removeTrend(trend: string) {
 		this.kweet.trends = this.kweet.trends.filter(t => t !== trend);
+	}
+
+	getMentions(e) {
+		if (e.charCode === 64) {
+			console.log(e);
+		}
+		console.log(this.mentionActive);
 	}
 
 	placeKweet() {
