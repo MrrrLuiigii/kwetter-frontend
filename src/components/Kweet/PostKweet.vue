@@ -102,6 +102,7 @@ export default class PostKweet extends Vue {
 	}) {
 		const value = e.target.value;
 		this.kweet.mentions = [];
+		//TODO: matchAll does not exist on string
 		[...value.toLowerCase().matchAll(/@[^\s]+/g)].forEach(mention => {
 			this.kweet.mentions.push(mention[0]);
 		});
