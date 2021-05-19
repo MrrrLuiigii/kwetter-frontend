@@ -23,12 +23,22 @@
 				placeholder="Trend..."
 			/>
 		</div>
+		<span class="tip">
+			Tip: to mention a user type <span class="highlight">@</span> followed by
+			the <span class="highlight">username</span>!
+		</span>
 		<div class="body">
+			<div
+				ref="kweet-body"
+				contenteditable=""
+				@keyup="setMentions"
+				class="input-body input-primary"
+			></div>
 			<textarea
 				@keyup="setMentions"
 				v-model.trim="kweet.body"
 				maxlength="140"
-				class="input-body input-primary"
+				class="input-body input-primary hidden-input"
 				placeholder="Place a Kweet..."
 			/>
 			<span class="body__length">({{ kweet.body.length }}/140)</span>
@@ -87,12 +97,26 @@ export default class PostKweet extends Vue {
 		this.kweet.trends = this.kweet.trends.filter(t => t !== trend);
 	}
 
-	setMentions(e: { target: { value: string } }) {
+	setMentions(e: {
+		target: { value: string; innerText: string; innerHtml: string };
+	}) {
 		const value = e.target.value;
 		this.kweet.mentions = [];
 		[...value.toLowerCase().matchAll(/@[^\s]+/g)].forEach(mention => {
 			this.kweet.mentions.push(mention[0]);
 		});
+
+		const words = value.split(" ");
+		for (let i = 0; i < words.length; i++) {
+			if (this.kweet.mentions.indexOf(words[i]) > -1) {
+				words[
+					i
+				] = `<span class="mention" style="color: #bb0a21;">${words[i]}</span>`;
+			}
+		}
+		const bodyDiv = this.$refs["kweet-body"] as HTMLElement;
+		if (this.kweet.body.length) bodyDiv.innerHTML = words.join(" ");
+		else bodyDiv.innerHTML = "";
 	}
 
 	placeKweet() {
@@ -173,5 +197,20 @@ export default class PostKweet extends Vue {
 
 .input-body {
 	height: 7.5em;
+	outline: none;
+	padding: 0.5em 1em 0 1em;
+}
+
+.hidden-input {
+	position: absolute;
+	top: 0;
+	background-color: transparent;
+	color: transparent;
+	border-color: transparent;
+	caret-color: color(app-font);
+}
+
+.highlight {
+	color: color(app-accent);
 }
 </style>
