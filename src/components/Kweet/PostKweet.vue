@@ -2,6 +2,7 @@
 	<div class="container">
 		<fa-icon class="container__feather" :icon="['fas', 'feather-alt']" />
 		<h1>What's happening?</h1>
+		<p v-if="error !== ''" class="errorMsg">{{ error }}</p>
 		<div class="trends">
 			<p class="noTrendsMsg" v-if="kweet.trends.length === 0">
 				You have not linked any trends yet...
@@ -23,25 +24,27 @@
 				placeholder="Trend..."
 			/>
 		</div>
-		<span class="tip">
-			Tip: to mention a user type <span class="highlight">@</span> followed by
-			the <span class="highlight">username</span>!
-		</span>
-		<div class="body">
-			<div
-				ref="kweet-body"
-				contenteditable=""
-				@keyup="setMentions"
-				class="input-body input-primary"
-			></div>
-			<textarea
-				@keyup="setMentions"
-				v-model.trim="kweet.body"
-				maxlength="140"
-				class="input-body input-primary hidden-input"
-				placeholder="Place a Kweet..."
-			/>
-			<span class="body__length">({{ kweet.body.length }}/140)</span>
+		<div>
+			<span class="tip">
+				Tip: to mention a user type <span class="highlight">@</span> followed by
+				the <span class="highlight">username</span>!
+			</span>
+			<div class="body">
+				<div
+					ref="kweet-body"
+					contenteditable=""
+					@keyup="setMentions"
+					class="input-body input-primary"
+				></div>
+				<textarea
+					@keyup="setMentions"
+					v-model.trim="kweet.body"
+					maxlength="140"
+					class="input-body input-primary hidden-input"
+					placeholder="Place a Kweet..."
+				/>
+				<span class="body__length">({{ kweet.body.length }}/140)</span>
+			</div>
 		</div>
 
 		<button class="button-primary post-button" @click="placeKweet">
@@ -136,6 +139,8 @@ export default class PostKweet extends Vue {
 					trends: [],
 					mentions: []
 				};
+				const bodyDiv = this.$refs["kweet-body"] as HTMLElement;
+				bodyDiv.innerHTML = "";
 			})
 			.catch((err: { message: string }) => {
 				this.error = err.message;
@@ -213,5 +218,9 @@ export default class PostKweet extends Vue {
 
 .highlight {
 	color: color(app-accent);
+}
+
+.errorMsg {
+	margin: 0;
 }
 </style>

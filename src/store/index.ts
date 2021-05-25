@@ -33,10 +33,17 @@ export default new Vuex.Store({
 			}
 		})
 	],
-	modules: { authModule, profileModule, kweetModule },
+	modules: {
+		authModule: authModule,
+		profileModule: profileModule,
+		kweetModule: kweetModule
+	},
 	mutations: {
 		CLEAR_STATE(state: any) {
-			Object.assign(state, defaultState);
+			Object.keys(state).forEach(module => {
+				if (!defaultState[module]) delete state[module];
+				else Object.assign(state[module], defaultState[module]);
+			});
 		}
 	},
 	actions: {
