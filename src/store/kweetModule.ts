@@ -1,4 +1,5 @@
 import KweetVM from "@/models/viewmodels/kweet.viewmodel";
+import { LikeVM } from "@/models/viewmodels/like.viewmodel";
 
 export const defaultState = {
 	skip: 0,
@@ -30,6 +31,13 @@ export default {
 		SAVE_KWEETS(state: any, data: { data: KweetVM[]; count: number }) {
 			state.kweets = state.kweets.concat(data.data);
 			state.count = data.count;
+		},
+		SET_LIKES(state: any, data: { likes: LikeVM[]; kweetId: string }) {
+			const kweet: KweetVM = state.kweets.find(
+				(kweet: KweetVM) => kweet.id === data.kweetId
+			);
+			kweet.likes.likes = data.likes;
+			kweet.likes.count = data.likes.length;
 		}
 	},
 	getters: {
@@ -49,6 +57,9 @@ export default {
 		},
 		saveKweets({ commit }: any, data: { data: KweetVM[]; count: number }) {
 			commit("SAVE_KWEETS", data);
+		},
+		setLikes({ commit }: any, data: { likes: LikeVM[]; kweetId: string }) {
+			commit("SET_LIKES", data);
 		}
 	}
 };

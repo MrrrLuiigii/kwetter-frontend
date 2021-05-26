@@ -17,6 +17,21 @@
 			<p class="kweet__text">
 				{{ kweet.body }}
 			</p>
+			<div class="kweet__like">
+				{{ kweet.likes.count }}
+				<fa-icon
+					v-if="hasLiked"
+					@click="unlikeKweet"
+					class="kweet__like__heart"
+					:icon="['fas', 'heart']"
+				/>
+				<fa-icon
+					v-else
+					@click="likeKweet"
+					class="kweet__like__heart unliked"
+					:icon="['fas', 'heart']"
+				/>
+			</div>
 			<div class="kweet__trends">
 				<span
 					class="kweet__trends__trend"
@@ -35,16 +50,38 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 //components
 import TrendChip from "@/components/TrendChip.vue";
 
+//services
+import LikeService from "@/services/likeService";
+
 @Component({ components: { TrendChip } })
 export default class Kweet extends Vue {
 	//TODO: type
 	@Prop()
 	kweet!: any;
 
+	get profileId() {
+		return this.$store.getters["authModule/getUser"].profileId;
+	}
+
+	get hasLiked() {
+		return (
+			this.kweet.likes.likes.filter(like => like.profileId === this.profileId)
+				.length > 0
+		);
+	}
+
 	get createdAt() {
 		const createdAt: string = this.kweet.createdAt;
 		const dateArray = new Date(createdAt).toLocaleString().split(", ");
 		return [dateArray[1], dateArray[0]].join(" ");
+	}
+
+	likeKweet() {
+		LikeService.likeKweet(this.kweet.id, this.profileId);
+	}
+
+	unlikeKweet() {
+		LikeService.unlikeKweet(this.kweet.id, this.profileId);
 	}
 }
 </script>
@@ -108,8 +145,20 @@ export default class Kweet extends Vue {
 	position: relative;
 
 	text-align: left;
-	width: 80%;
+	width: calc(100% - 7.6em);
 	padding: 0 1em;
+
+	&__like {
+		position: absolute;
+		top: 0;
+		right: 0;
+		font-size: 1.5em;
+
+		&__heart {
+			color: color(app-accent);
+			cursor: pointer;
+		}
+	}
 
 	&__trends {
 		display: flex;
@@ -125,6 +174,15 @@ export default class Kweet extends Vue {
 			margin: 0.25em 0.5em;
 		}
 	}
+}
+
+.unliked {
+	color: color(app-background);
+}
+
+.unliked path {
+	stroke: color(app-accent);
+	stroke-width: 64px;
 }
 
 ::-webkit-scrollbar {
