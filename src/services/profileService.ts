@@ -30,6 +30,17 @@ class ProfileService {
 			});
 	}
 
+	public static getProfileByUsername(username: string) {
+		const url: string = `${this.serviceUrl}/username/${username}`;
+		return AxiosRequestHandler.get(url)
+			.then((res: AxiosResponse) => {
+				return res.data;
+			})
+			.catch((err: any) => {
+				throw err;
+			});
+	}
+
 	public static createProfile(createProfileRequest: CreateProfileRequest) {
 		return AxiosRequestHandler.post(this.serviceUrl, createProfileRequest)
 			.then((res: AxiosResponse) => {

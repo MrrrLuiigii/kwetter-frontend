@@ -38,7 +38,7 @@ export default class ProfileView extends Vue {
 		return undefined;
 	}
 
-	created() {
+	async created() {
 		this.getProfile();
 	}
 

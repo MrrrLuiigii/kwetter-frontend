@@ -14,8 +14,16 @@
 
 		<div class="kweet">
 			<h2 class="kweet__username">{{ kweet.profile.username }}</h2>
-			<p class="kweet__text">
-				{{ kweet.body }}
+			<p ref="kweet-body" class="kweet__text">
+				<span v-for="(word, index) in words" :key="index">
+					<span
+						class="mention"
+						v-if="isMention(word)"
+						@click="routeToUsername(word.substring(1))"
+						>{{ word + " " }}</span
+					>
+					<span v-else>{{ word + " " }}</span>
+				</span>
 			</p>
 			<div class="kweet__like">
 				{{ kweet.likes.count }}
@@ -50,14 +58,18 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 //components
 import TrendChip from "@/components/TrendChip.vue";
 
+//models
+import KweetVM from "@/models/viewmodels/kweet.viewmodel";
+import { ProfileVM } from "@/models/viewmodels/profile.viewmodel";
+
 //services
 import LikeService from "@/services/likeService";
+import ProfileService from "@/services/profileService";
 
 @Component({ components: { TrendChip } })
 export default class Kweet extends Vue {
-	//TODO: type
 	@Prop()
-	kweet!: any;
+	kweet!: KweetVM;
 
 	get profileId() {
 		return this.$store.getters["authModule/getUser"].profileId;
@@ -71,17 +83,39 @@ export default class Kweet extends Vue {
 	}
 
 	get createdAt() {
-		const createdAt: string = this.kweet.createdAt;
+		const createdAt: string = this.kweet.createdAt.toString();
 		const dateArray = new Date(createdAt).toLocaleString().split(", ");
 		return [dateArray[1], dateArray[0]].join(" ");
 	}
 
+	get words() {
+		return this.kweet.body.split(" ");
+	}
+
+	isMention(word: string) {
+		const mentions = [];
+		[...this.kweet.body.toLowerCase().matchAll(/@[^\s]+/g)].forEach(mention => {
+			mentions.push(mention[0]);
+		});
+		return mentions.indexOf(word) > -1;
+	}
+
+	async routeToUsername(username: string) {
+		ProfileService.getProfileByUsername(username)
+			.then((profile: ProfileVM) => {
+				this.$router
+					.replace({ name: "Profile", params: { id: profile.id } })
+					.catch(() => {});
+			})
+			.catch(() => {});
+	}
+
 	likeKweet() {
-		LikeService.likeKweet(this.kweet.id, this.profileId);
+		LikeService.likeKweet(this.kweet.id, this.profileId).catch(() => {});
 	}
 
 	unlikeKweet() {
-		LikeService.unlikeKweet(this.kweet.id, this.profileId);
+		LikeService.unlikeKweet(this.kweet.id, this.profileId).catch(() => {});
 	}
 }
 </script>
@@ -174,6 +208,11 @@ export default class Kweet extends Vue {
 			margin: 0.25em 0.5em;
 		}
 	}
+}
+
+.mention {
+	color: color(app-accent);
+	cursor: pointer;
 }
 
 .unliked {

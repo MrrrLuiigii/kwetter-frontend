@@ -32,7 +32,6 @@
 			<div class="body">
 				<div
 					ref="kweet-body"
-					contenteditable=""
 					@keyup="setMentions"
 					class="input-body input-primary"
 				></div>
@@ -55,6 +54,7 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import escape from "escape-html";
 
 //components
 import TrendChip from "@/components/TrendChip.vue";
@@ -105,7 +105,7 @@ export default class PostKweet extends Vue {
 	}) {
 		const value = e.target.value;
 		this.kweet.mentions = [];
-		//TODO: matchAll does not exist on string
+
 		[...value.toLowerCase().matchAll(/@[^\s]+/g)].forEach(mention => {
 			this.kweet.mentions.push(mention[0]);
 		});
@@ -116,6 +116,8 @@ export default class PostKweet extends Vue {
 				words[
 					i
 				] = `<span class="mention" style="color: #bb0a21;">${words[i]}</span>`;
+			} else {
+				words[i] = escape(words[i]);
 			}
 		}
 		const bodyDiv = this.$refs["kweet-body"] as HTMLElement;

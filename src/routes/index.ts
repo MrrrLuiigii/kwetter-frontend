@@ -47,6 +47,16 @@ const router = new Router({
 				title: "Profile - Kwetter",
 				requiresAuth: true
 			}
+		},
+		{
+			path: "/profile/username/:username",
+			name: "Profile",
+			component: () =>
+				import(/* webpackChunkName: "Profile" */ "../views/ProfileView.vue"),
+			meta: {
+				title: "Profile - Kwetter",
+				requiresAuth: true
+			}
 		}
 	]
 });
