@@ -7,7 +7,7 @@
 					src="https://cdn2.iconfinder.com/data/icons/font-awesome/1792/user-512.png"
 				/>
 			</div>
-			<div class="profile__date">{{ createdAt }}</div>
+			<div class="profile__date">TODO: timeago {{ createdAt }}</div>
 		</div>
 
 		<hr class="horizontal-divider" />
