@@ -14,16 +14,10 @@ import "vuetify/dist/vuetify.min.css";
 //meta
 import VueMeta from "vue-meta";
 
-//font-awesome
-import { library } from "@fortawesome/fontawesome-svg-core";
-import {
-	faBars,
-	faFeatherAlt,
-	faSignOutAlt,
-	faTimes,
-	faUser
-} from "@fortawesome/free-solid-svg-icons";
+//font awesome
+import "./icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+Vue.component("fa-icon", FontAwesomeIcon);
 
 //env variables
 import "dotenv/config";
@@ -34,9 +28,6 @@ Vue.use(Vuetify);
 Vue.use(VueMeta, {
 	refreshOnceOnNavigation: true
 });
-
-library.add(faBars, faFeatherAlt, faUser, faSignOutAlt, faTimes);
-Vue.component("fa-icon", FontAwesomeIcon);
 
 const nodeEnv: "development" | "production" =
 	process.env.VUE_APP_NODE_ENV || "development";
