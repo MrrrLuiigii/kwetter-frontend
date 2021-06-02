@@ -2,6 +2,7 @@
 	<div>
 		<input
 			@focus="focus = true"
+			@blur="focus = false"
 			v-model="search"
 			@input="getProfiles"
 			class="input-primary"
@@ -13,16 +14,26 @@
 			:class="focus ? 'active' : ''"
 			v-if="options.length > 0"
 		>
-			<div
-				class="options__option"
-				v-for="profile in options"
-				:key="profile.id"
-				@mousedown="route(profile.id)"
-			>
-				{{ profile.name }} ({{ profile.username }}) {{ profile.following }}
+			<div v-for="(profile, index) in options" :key="profile.id">
+				<div class="options__option" @mousedown="route(profile.id)">
+					<div class="options__option__username">
+						{{ profile.username }}
+					</div>
+					<div class="options__option__name">
+						{{ profile.name }}
+					</div>
+				</div>
+				<div
+					v-if="index + 1 < options.length"
+					class="options__option__divider"
+				></div>
 			</div>
 		</div>
-		<div class="options" :class="focus ? 'active' : ''" v-else>
+		<div
+			class="options no-options"
+			:class="focus ? 'active' : ''"
+			v-else-if="search.length > 0"
+		>
 			No results...
 		</div>
 	</div>
@@ -85,7 +96,24 @@ export default class SearchProfileInput extends Vue {
 	border-radius: $border-radius-small;
 
 	&__option {
+		text-align: left;
 		padding: 0.25em;
+		padding-left: 1em;
+
+		&__username {
+			color: color(app-primary);
+			font-size: 1.25em;
+		}
+
+		&__name {
+			font-size: 0.9em;
+		}
+
+		&__divider {
+			background-color: color(app-font);
+			width: calc(100% + 1em);
+			height: 1px;
+		}
 
 		&__route {
 			color: color(app-font);
@@ -101,5 +129,9 @@ export default class SearchProfileInput extends Vue {
 .options.active {
 	display: block;
 	background-color: color(app-background);
+}
+
+.no-options {
+	padding: 0.25em;
 }
 </style>
