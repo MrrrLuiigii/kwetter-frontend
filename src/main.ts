@@ -4,6 +4,9 @@ import router from "./routes/index";
 import store from "./store/index";
 import "./registerServiceWorker";
 
+//timeago
+import VueTimeago from "vue-timeago";
+
 //toast
 import Toasted from "vue-toasted";
 
@@ -23,6 +26,10 @@ Vue.component("fa-icon", FontAwesomeIcon);
 import "dotenv/config";
 import validateEnv from "./utils/validateEnv";
 
+const locale = Intl.DateTimeFormat().resolvedOptions().locale
+	? Intl.DateTimeFormat().resolvedOptions().locale
+	: "nl";
+Vue.use(VueTimeago, { locale });
 Vue.use(Toasted);
 Vue.use(Vuetify);
 Vue.use(VueMeta, {

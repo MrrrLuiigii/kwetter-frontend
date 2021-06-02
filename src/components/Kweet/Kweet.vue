@@ -7,7 +7,13 @@
 					src="https://cdn2.iconfinder.com/data/icons/font-awesome/1792/user-512.png"
 				/>
 			</div>
-			<div class="profile__date">TODO: timeago {{ createdAt }}</div>
+			<div class="profile__date">
+				<Timeago
+					class="profile__date__timeago"
+					:datetime="createdAt"
+					:autoUpdate="true"
+				/>
+			</div>
 		</div>
 
 		<hr class="horizontal-divider" />
@@ -84,7 +90,7 @@ export default class Kweet extends Vue {
 
 	get createdAt() {
 		const createdAt: string = this.kweet.createdAt.toString();
-		const dateArray = new Date(createdAt).toLocaleString().split(", ");
+		const dateArray = new Date(createdAt).toLocaleString("en").split(", ");
 		return [dateArray[1], dateArray[0]].join(" ");
 	}
 
@@ -135,6 +141,7 @@ export default class Kweet extends Vue {
 
 .profile {
 	display: flex;
+	flex-direction: column;
 	width: 7.6em;
 	position: relative;
 
@@ -158,11 +165,17 @@ export default class Kweet extends Vue {
 
 	&__date {
 		font-size: 0.75em;
+		padding-right: 1em;
 		text-align: right;
-		margin-right: 1em;
-
+		width: 100%;
 		position: absolute;
 		bottom: 0;
+		right: 50%;
+
+		&__timeago {
+			position: relative;
+			right: -50%;
+		}
 	}
 }
 
