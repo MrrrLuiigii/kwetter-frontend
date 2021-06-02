@@ -1,11 +1,13 @@
 import { KweetLikesVM } from "./like.viewmodel";
+import { KweetProfileVM } from "./profile.viewmodel";
+import { KweetTrendVM } from "./trend.viewmodel";
 
 interface KweetVM {
 	id: string;
 	body: string;
-	profile: any; //TODO type
-	trends: any; //TODO type
-	mentions: any; //TODO type
+	profile: KweetProfileVM;
+	trends: KweetTrendVM;
+	mentions: string[];
 	likes: KweetLikesVM;
 	createdAt: Date;
 }

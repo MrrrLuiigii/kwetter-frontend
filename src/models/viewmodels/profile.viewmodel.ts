@@ -6,19 +6,19 @@ export interface ProfileVM {
 	name: string;
 	web: string;
 	bio: string;
-	followers: any[];
-	following: any[];
-	likes: any[];
-	mentions: any[];
-	kweets: any[];
-	trends: any[];
+	followers: ProfileMinVM[];
+	following: ProfileMinVM[];
+}
+
+export interface KweetProfileVM {
+	id: string;
+	username: string;
 }
 
 export interface ProfileSearchVM {
 	id: string;
 	username: string;
 	name: string;
-	following: boolean;
 }
 
 export interface ProfileMinVM {
