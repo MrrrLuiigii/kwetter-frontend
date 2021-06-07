@@ -10,12 +10,26 @@
 				/>
 			</div>
 			<div class="container__general__info">
-				<h1>{{ profile.username }}</h1>
-				<p>Name: {{ profile.name }}</p>
-				<p>Web: {{ profile.web }}</p>
+				<h1 class="container__general__info__username">
+					{{ profile.username }}
+				</h1>
+				<p class="container__general__info__name">{{ profile.name }}</p>
+				<p
+					class="container__general__info__web"
+					@click="showExternalLinkModal = true"
+				>
+					{{ profile.web }}
+				</p>
 			</div>
 			<button
-				v-if="ownProfile && $route.name !== 'ManageProfile'"
+				v-if="ownProfile && $route.name === 'ManageProfile'"
+				@click="showDeleteProfileModal = true"
+				class="button-accent-small container__general__follow"
+			>
+				Delete profile
+			</button>
+			<button
+				v-else-if="ownProfile && $route.name !== 'ManageProfile'"
 				@click="$router.replace({ name: 'ManageProfile' })"
 				class="button-primary-small container__general__follow"
 			>
@@ -23,7 +37,7 @@
 				<fa-icon class="feather feather-stroke" :icon="['fas', 'user-cog']" />
 			</button>
 			<button
-				v-if="!ownProfile && isFollowing === false"
+				v-else-if="!ownProfile && isFollowing === false"
 				@click="follow"
 				class="button-primary-small container__general__follow"
 			>
@@ -38,28 +52,76 @@
 			</button>
 		</div>
 		<div class="container__bio">
-			<p>Bio: {{ profile.bio }}</p>
-			<div>
-				Trends:
-				<span v-for="trend in profile.trends" :key="trend.id">{{
-					trend.name
-				}}</span>
+			<p>{{ profile.bio }}</p>
+			<div class="container__bio__trends">
+				<span
+					class="container__bio__trends__trend"
+					v-for="trend in profile.trends"
+					:key="trend.id"
+					>#{{ trend.name }}</span
+				>
 			</div>
 		</div>
+
+		<Modal
+			v-if="showExternalLinkModal"
+			@close="
+				confirm =>
+					confirm ? routeToExternal() : (showExternalLinkModal = false)
+			"
+		>
+			<template v-slot:header>
+				External link
+			</template>
+			<template v-slot:body>
+				Are you sure you want to proceed? You will be routed to
+				<span class="external-link">{{ profile.web }}</span
+				>.
+			</template>
+			<template v-slot:confirm>
+				Proceed
+			</template>
+		</Modal>
+
+		<Modal
+			:typeConfirm="profile.id.substr(0, 10)"
+			v-if="showDeleteProfileModal"
+			@close="
+				confirm =>
+					confirm ? deleteProfile() : (showDeleteProfileModal = false)
+			"
+		>
+			<template v-slot:header>
+				Delete profile
+			</template>
+			<template v-slot:body>
+				Are you sure you want to delete your profile? This action is
+				irreversible. All your Kweets, likes and follows will be deleted and you
+				will no longer have access to Kwetter.
+			</template>
+			<template v-slot:confirm>
+				Delete
+			</template>
+		</Modal>
 	</div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Watch } from "vue-property-decorator";
 
+//components
+import Modal from "@/components/Modal.vue";
+
 //services
 import FollowService from "@/services/followService";
 
-@Component
+@Component({ components: { Modal } })
 export default class ProfileContainer extends Vue {
 	private error: string = "";
 
 	private isFollowing: boolean = false;
+	private showExternalLinkModal: boolean = false;
+	private showDeleteProfileModal: boolean = false;
 
 	get profile() {
 		return this.$store.getters["profileModule/getProfile"];
@@ -120,6 +182,21 @@ export default class ProfileContainer extends Vue {
 				this.error = err.message;
 			});
 	}
+
+	routeToExternal() {
+		this.showExternalLinkModal = false;
+		const url: string =
+			this.profile.web.startsWith("http://") ||
+			this.profile.web.startsWith("https://")
+				? this.profile.web
+				: `http://${this.profile.web}`;
+		window.location.href = url;
+	}
+
+	deleteProfile() {
+		this.showDeleteProfileModal = false;
+		alert("delete profile");
+	}
 }
 </script>
 
@@ -152,6 +229,19 @@ export default class ProfileContainer extends Vue {
 		&__info {
 			text-align: left;
 			padding: 0 1em;
+
+			&__username {
+				color: color(app-primary);
+			}
+
+			&__web {
+				text-decoration: underline;
+			}
+
+			&__web:hover {
+				cursor: pointer;
+				color: color(app-accent);
+			}
 		}
 
 		&__follow {
@@ -165,8 +255,19 @@ export default class ProfileContainer extends Vue {
 		display: flex;
 		flex-direction: column;
 		text-align: left;
-		padding-top: 1em;
-		border-top: 4px solid color(app-font);
+		padding: 1em;
+
+		border-radius: $border-radius-small;
+		background-color: color(app-gray);
+
+		&__trends {
+			display: flex;
+			column-gap: 1em;
+
+			&__trend {
+				color: color(app-accent);
+			}
+		}
 	}
 
 	&__feather {

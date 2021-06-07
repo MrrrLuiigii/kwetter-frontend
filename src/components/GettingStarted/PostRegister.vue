@@ -130,6 +130,12 @@ export default class PostRegister extends Vue {
 			return (this.error =
 				"There is nothing to save. Fill in one field at least...");
 
+		if (
+			!this.createProfileRequest.web.startsWith("http://") ||
+			!this.createProfileRequest.web.startsWith("https://")
+		)
+			this.createProfileRequest.web = `http://${this.createProfileRequest.web}`;
+
 		ProfileService.createProfile(this.createProfileRequest)
 			.then((res: any) => {
 				this.error = "";

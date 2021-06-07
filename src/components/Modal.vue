@@ -12,6 +12,21 @@
 						Modal body
 					</slot>
 				</div>
+				<div v-if="typeConfirm" class="type-confirm">
+					<p class="type-confirm__message">
+						Repeat the following in order to proceed:
+					</p>
+					<div class="type-confirm__value">
+						{{ typeConfirm }}
+					</div>
+					<input
+						v-model="confirmValue"
+						v-focus
+						class="input-primary type-confirm__input"
+						type="text"
+						placeholder="Are you sure?"
+					/>
+				</div>
 				<div class="modal-footer">
 					<button
 						:class="deleteModal ? 'button-primary-small' : 'button-alt-small'"
@@ -20,6 +35,8 @@
 						<slot name="cancel">Cancel</slot>
 					</button>
 					<button
+						class="button-confirm"
+						:disabled="typeConfirm && confirmValue !== typeConfirm"
 						:class="
 							deleteModal ? 'button-accent-small' : 'button-primary-small'
 						"
@@ -40,6 +57,11 @@ import { Component, Prop, Vue } from "vue-property-decorator";
 export default class Modal extends Vue {
 	@Prop({ default: true })
 	deleteModal: boolean;
+
+	@Prop({ default: undefined })
+	typeConfirm: string;
+
+	private confirmValue: string = "";
 }
 </script>
 
@@ -80,5 +102,34 @@ export default class Modal extends Vue {
 	display: flex;
 	justify-content: flex-end;
 	column-gap: 1em;
+}
+
+.type-confirm {
+	&__message {
+		margin: 0;
+	}
+
+	&__value {
+		color: color(app-accent);
+	}
+
+	&__input {
+		width: 100%;
+		margin: 1em 0 2em 0;
+	}
+}
+
+.button-confirm:disabled,
+.button-confirm[disabled] {
+	border: 5px solid color(app-gray);
+	color: color(app-gray);
+	border-radius: $border-radius;
+	width: 150px;
+	height: 2em;
+}
+
+.button-confirm:disabled:hover,
+.button-confirm[disabled]:hover {
+	background-color: color(app-background);
 }
 </style>
