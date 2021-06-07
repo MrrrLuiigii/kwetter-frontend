@@ -38,6 +38,15 @@ export default {
 			);
 			kweet.likes.likes = data.likes;
 			kweet.likes.count = data.likes.length;
+		},
+		DELETE_KWEET(state: any, kweetId: string) {
+			const index = state.kweets.findIndex(
+				(kweet: KweetVM) => kweet.id === kweetId
+			);
+			if (index !== -1) {
+				state.kweets = state.kweets.splice(index, 1);
+				state.count -= 1;
+			}
 		}
 	},
 	getters: {
@@ -60,6 +69,9 @@ export default {
 		},
 		setLikes({ commit }: any, data: { likes: LikeVM[]; kweetId: string }) {
 			commit("SET_LIKES", data);
+		},
+		deleteKweet({ commit }: any, kweetId: string) {
+			commit("DELETE_KWEET", kweetId);
 		}
 	}
 };

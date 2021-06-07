@@ -31,21 +31,37 @@
 					<span v-else>{{ word + " " }}</span>
 				</span>
 			</p>
-			<div class="kweet__like">
-				{{ kweet.likes.count }}
-				<fa-icon
-					v-if="hasLiked"
-					@click="unlikeKweet"
-					class="kweet__like__heart"
-					:icon="['fas', 'heart']"
-				/>
-				<fa-icon
-					v-else
-					@click="likeKweet"
-					class="kweet__like__heart unliked"
-					:icon="['fas', 'heart']"
-				/>
+			<div class="kweet__actions">
+				<div class="kweet__actions__like">
+					{{ kweet.likes.count }}
+
+					<fa-icon
+						v-if="manageProfile"
+						class="kweet__actions__like__heart manage-heart"
+						:icon="['fas', 'heart']"
+					/>
+					<fa-icon
+						v-else-if="hasLiked"
+						@click="unlikeKweet"
+						class="kweet__actions__like__heart"
+						:icon="['fas', 'heart']"
+					/>
+					<fa-icon
+						v-else
+						@click="likeKweet"
+						class="kweet__like__heart unliked"
+						:icon="['fas', 'heart']"
+					/>
+				</div>
+				<div v-if="manageProfile" class="kweet__actions__trash">
+					<fa-icon
+						@click="showDeleteModal = true"
+						class="kweet__actions__trash__bin"
+						:icon="['fas', 'trash-alt']"
+					/>
+				</div>
 			</div>
+
 			<div class="kweet__trends">
 				<span
 					class="kweet__trends__trend"
@@ -55,6 +71,22 @@
 				>
 			</div>
 		</div>
+
+		<Modal
+			v-if="showDeleteModal"
+			@close="confirm => (confirm ? deleteKweet() : (showDeleteModal = false))"
+		>
+			<template v-slot:header>
+				Delete kweet
+			</template>
+			<template v-slot:body>
+				Are you sure you want to delete this kweet? This action is
+				irreversible...
+			</template>
+			<template v-slot:confirm>
+				Delete
+			</template>
+		</Modal>
 	</div>
 </template>
 
@@ -63,6 +95,7 @@ import { Component, Vue, Prop } from "vue-property-decorator";
 
 //components
 import TrendChip from "@/components/TrendChip.vue";
+import Modal from "@/components/Modal.vue";
 
 //models
 import KweetVM from "@/models/viewmodels/kweet.viewmodel";
@@ -71,11 +104,14 @@ import { ProfileVM } from "@/models/viewmodels/profile.viewmodel";
 //services
 import LikeService from "@/services/likeService";
 import ProfileService from "@/services/profileService";
+import KweetService from "@/services/kweetService";
 
-@Component({ components: { TrendChip } })
+@Component({ components: { TrendChip, Modal } })
 export default class Kweet extends Vue {
 	@Prop()
 	kweet!: KweetVM;
+
+	private showDeleteModal: boolean = false;
 
 	get profileId() {
 		return this.$store.getters["authModule/getUser"].profileId;
@@ -86,6 +122,10 @@ export default class Kweet extends Vue {
 			this.kweet.likes.likes.filter(like => like.profileId === this.profileId)
 				.length > 0
 		);
+	}
+
+	get manageProfile() {
+		return this.$route.name === "ManageProfile";
 	}
 
 	get createdAt() {
@@ -122,6 +162,15 @@ export default class Kweet extends Vue {
 
 	unlikeKweet() {
 		LikeService.unlikeKweet(this.kweet.id, this.profileId).catch(() => {});
+	}
+
+	deleteKweet() {
+		this.showDeleteModal = false;
+		KweetService.deleteKweet(this.kweet.id)
+			.then(() => {
+				this.$emit("deleted");
+			})
+			.catch(() => {});
 	}
 }
 </script>
@@ -195,15 +244,30 @@ export default class Kweet extends Vue {
 	width: calc(100% - 7.6em);
 	padding: 0 1em;
 
-	&__like {
+	&__actions {
 		position: absolute;
 		top: 0;
 		right: 0;
-		font-size: 1.5em;
 
-		&__heart {
-			color: color(app-accent);
-			cursor: pointer;
+		display: flex;
+		column-gap: 2em;
+
+		&__like {
+			font-size: 1.5em;
+
+			&__heart {
+				color: color(app-accent);
+				cursor: pointer;
+			}
+		}
+
+		&__trash {
+			font-size: 1.5em;
+
+			&__bin {
+				color: color(app-accent);
+				cursor: pointer;
+			}
 		}
 	}
 
@@ -232,6 +296,12 @@ export default class Kweet extends Vue {
 	color: color(app-background);
 }
 
+.manage-heart {
+	color: color(app-background);
+	cursor: unset;
+}
+
+.manage-heart path,
 .unliked path {
 	stroke: color(app-accent);
 	stroke-width: 64px;

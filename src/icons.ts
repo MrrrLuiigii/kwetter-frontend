@@ -5,7 +5,18 @@ import {
 	faHeart,
 	faSignOutAlt,
 	faTimes,
-	faUser
+	faTrashAlt,
+	faUser,
+	faUserCog
 } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faBars, faFeatherAlt, faUser, faSignOutAlt, faTimes, faHeart);
+library.add(
+	faBars,
+	faFeatherAlt,
+	faUser,
+	faSignOutAlt,
+	faTimes,
+	faHeart,
+	faUserCog,
+	faTrashAlt
+);

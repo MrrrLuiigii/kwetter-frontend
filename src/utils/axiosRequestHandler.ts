@@ -96,7 +96,7 @@ class AxiosRequestHandler {
 			});
 	}
 
-	public static delete(url: string, object: any): any {
+	public static delete(url: string, object?: any): any {
 		this.getAuthHeaders();
 		return this.api
 			.delete(url, {

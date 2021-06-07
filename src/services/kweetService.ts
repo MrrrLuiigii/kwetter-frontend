@@ -44,6 +44,17 @@ class KweetService {
 				throw err;
 			});
 	}
+
+	public static deleteKweet(kweetId: string) {
+		const url: string = `${this.serviceUrl}/${kweetId}`;
+		return AxiosRequestHandler.delete(url)
+			.then((res: AxiosResponse) => {
+				return res;
+			})
+			.catch((err: any) => {
+				throw err;
+			});
+	}
 }
 
 export default KweetService;

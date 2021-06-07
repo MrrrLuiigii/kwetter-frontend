@@ -49,12 +49,14 @@ const router = new Router({
 			}
 		},
 		{
-			path: "/profile/username/:username",
-			name: "Profile",
+			path: "/manageprofile",
+			name: "ManageProfile",
 			component: () =>
-				import(/* webpackChunkName: "Profile" */ "../views/ProfileView.vue"),
+				import(
+					/* webpackChunkName: "Profile" */ "../views/ManageProfileView.vue"
+				),
 			meta: {
-				title: "Profile - Kwetter",
+				title: "Manage Profile - Kwetter",
 				requiresAuth: true
 			}
 		}

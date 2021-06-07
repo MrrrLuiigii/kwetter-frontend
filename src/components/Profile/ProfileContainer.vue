@@ -15,14 +15,22 @@
 				<p>Web: {{ profile.web }}</p>
 			</div>
 			<button
-				v-if="showFollowButton && isFollowing === false"
+				v-if="ownProfile && $route.name !== 'ManageProfile'"
+				@click="$router.replace({ name: 'ManageProfile' })"
+				class="button-primary-small container__general__follow"
+			>
+				Settings
+				<fa-icon class="feather feather-stroke" :icon="['fas', 'user-cog']" />
+			</button>
+			<button
+				v-if="!ownProfile && isFollowing === false"
 				@click="follow"
 				class="button-primary-small container__general__follow"
 			>
 				Follow
 			</button>
 			<button
-				v-else-if="showFollowButton && isFollowing === true"
+				v-else-if="!ownProfile && isFollowing === true"
 				@click="unfollow"
 				class="button-accent-small container__general__follow"
 			>
@@ -65,11 +73,11 @@ export default class ProfileContainer extends Vue {
 		return this.$store.getters["authModule/getUser"];
 	}
 
-	get showFollowButton() {
+	get ownProfile() {
 		const profileId: string = this.$route.params.id
 			? this.$route.params.id
 			: this.profile.id;
-		return profileId === this.user.profileId ? false : true;
+		return profileId === this.user.profileId ? true : false;
 	}
 
 	created() {

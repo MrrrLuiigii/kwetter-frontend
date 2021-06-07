@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="container__header">
 			<div
-				v-if="!isFeed"
+				v-if="!isFeed && $route.name !== 'ManageProfile'"
 				class="container__header__tab"
 				@click="changeTab(0)"
 				:inactive="tab === 1"
@@ -28,7 +28,12 @@
 		<div v-if="kweets.length === 0">No Kweets yet...</div>
 		<div v-else-if="tab === 0" class="container__items">
 			<!-- TODO: show kweets where profile got mentioned -->
-			<Kweet v-for="kweet in kweets" :key="kweet.id" :kweet="kweet" />
+			<Kweet
+				v-for="(kweet, index) in kweets"
+				:key="kweet.id"
+				:kweet="kweet"
+				@deleted="() => kweets.splice(index, 1)"
+			/>
 			<infinite-loading
 				v-if="morePages"
 				@infinite="getMoreKweets"
@@ -36,7 +41,12 @@
 			<div v-else-if="mentionKweets.length > 0">No more Kweets...</div>
 		</div>
 		<div v-if="tab === 1" class="container__items">
-			<Kweet v-for="kweet in kweets" :key="kweet.id" :kweet="kweet" />
+			<Kweet
+				v-for="(kweet, index) in kweets"
+				:key="kweet.id"
+				:kweet="kweet"
+				@deleted="() => kweets.splice(index, 1)"
+			/>
 			<infinite-loading
 				v-if="morePages"
 				@infinite="getMoreKweets"
