@@ -1,5 +1,6 @@
 import { AxiosResponse } from "axios";
 import store from "@/store";
+import router from "@/routes/index";
 import AxiosRequestHandler from "@/utils/axiosRequestHandler";
 import { CreateProfileRequest } from "@/models/dto/profile.dto";
 
@@ -45,6 +46,19 @@ class ProfileService {
 		return AxiosRequestHandler.post(this.serviceUrl, createProfileRequest)
 			.then((res: AxiosResponse) => {
 				store.dispatch("profileModule/saveProfile", res.data);
+				return res;
+			})
+			.catch((err: any) => {
+				throw err;
+			});
+	}
+
+	public static deleteProfile(profileId: string) {
+		const url: string = `${this.serviceUrl}/${profileId}`;
+		return AxiosRequestHandler.delete(url)
+			.then((res: AxiosResponse) => {
+				store.dispatch("logout");
+				router.replace({ name: "Landingspage" });
 				return res;
 			})
 			.catch((err: any) => {

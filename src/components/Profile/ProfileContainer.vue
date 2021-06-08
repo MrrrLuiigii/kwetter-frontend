@@ -114,6 +114,7 @@ import Modal from "@/components/Modal.vue";
 
 //services
 import FollowService from "@/services/followService";
+import ProfileService from "@/services/profileService";
 
 @Component({ components: { Modal } })
 export default class ProfileContainer extends Vue {
@@ -195,7 +196,9 @@ export default class ProfileContainer extends Vue {
 
 	deleteProfile() {
 		this.showDeleteProfileModal = false;
-		alert("delete profile");
+		ProfileService.deleteProfile(this.profileId).catch(err => {
+			console.log(err);
+		});
 	}
 }
 </script>
