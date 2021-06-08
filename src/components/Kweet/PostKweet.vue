@@ -106,7 +106,7 @@ export default class PostKweet extends Vue {
 		const value = e.target.value;
 		this.kweet.mentions = [];
 
-		[...value.toLowerCase().matchAll(/@[^\s]+/g)].forEach(mention => {
+		[...value.matchAll(/@[^\s]+/g)].forEach(mention => {
 			this.kweet.mentions.push(mention[0]);
 		});
 

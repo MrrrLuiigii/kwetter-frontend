@@ -25,20 +25,20 @@
 				<div class="container__header__tab__name">Kweets</div>
 			</div>
 		</div>
-		<div v-if="kweets.length === 0">No Kweets yet...</div>
+		<div v-if="tab === 1 && kweets.length === 0">No Kweets yet...</div>
+		<div v-if="tab === 0 && mentionKweets.length === 0">No mentions yet...</div>
 		<div v-else-if="tab === 0" class="container__items">
-			<!-- TODO: show kweets where profile got mentioned -->
 			<Kweet
-				v-for="(kweet, index) in kweets"
+				v-for="(kweet, index) in mentionKweets"
 				:key="kweet.id"
 				:kweet="kweet"
-				@deleted="() => kweets.splice(index, 1)"
+				@deleted="() => mentionKweets.splice(index, 1)"
 			/>
 			<infinite-loading
-				v-if="morePages"
-				@infinite="getMoreKweets"
+				v-if="moreMentionPages"
+				@infinite="getMoreMentionKweets"
 			></infinite-loading>
-			<div v-else-if="mentionKweets.length > 0">No more Kweets...</div>
+			<div v-else-if="mentionKweets.length > 0">No more mentions...</div>
 		</div>
 		<div v-if="tab === 1" class="container__items">
 			<Kweet
@@ -86,8 +86,7 @@ export default class KweetContainer extends Vue {
 	}
 
 	get mentionKweets() {
-		//TODO mentionKweets
-		return this.$store.getters["kweetModule/getKweets"];
+		return this.$store.getters["kweetModule/getMentionKweets"];
 	}
 
 	get morePages() {
@@ -97,8 +96,16 @@ export default class KweetContainer extends Vue {
 		return pagination.count > pagination.skip;
 	}
 
+	get moreMentionPages() {
+		const pagination: { skip: number; count: number } = this.$store.getters[
+			"kweetModule/getMentionPagination"
+		];
+		return pagination.count > pagination.skip;
+	}
+
 	created() {
 		if (this.isFeed) {
+			this.getInitialMentionKweets();
 			return this.getInitialFeed();
 		}
 		this.getInitialKweets();
@@ -113,6 +120,18 @@ export default class KweetContainer extends Vue {
 			.catch((err: { message: string }) => {
 				this.error = err.message;
 			});
+	}
+
+	getInitialMentionKweets(id?: string) {
+		this.$store.dispatch("kweetModule/resetMentionPagination");
+		//TODO: get kweets by mention
+		// KweetService.getKweetsByProfileId(id ? id : this.profileId)
+		// 	.then((res: any) => {
+		// 		this.error = "";
+		// 	})
+		// 	.catch((err: { message: string }) => {
+		// 		this.error = err.message;
+		// 	});
 	}
 
 	getMoreKweets($state: { complete: () => void; loaded: () => void }) {
@@ -130,6 +149,25 @@ export default class KweetContainer extends Vue {
 				.catch((err: { message: string }) => {
 					this.error = err.message;
 				});
+		}
+	}
+
+	getMoreMentionKweets($state: { complete: () => void; loaded: () => void }) {
+		const profileId: string = this.$route.params.id
+			? this.$route.params.id
+			: this.profileId;
+		this.$store.dispatch("kweetModule/mentionPageUp");
+		if (!this.moreMentionPages) $state.complete();
+		//TODO: get kweets by mention
+		else {
+			// KweetService.getKweetsByProfileId(profileId)
+			// 	.then(() => {
+			// 		this.error = "";
+			// 		$state.loaded();
+			// 	})
+			// 	.catch((err: { message: string }) => {
+			// 		this.error = err.message;
+			// 	});
 		}
 	}
 

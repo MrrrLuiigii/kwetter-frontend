@@ -140,7 +140,7 @@ export default class Kweet extends Vue {
 
 	isMention(word: string) {
 		const mentions = [];
-		[...this.kweet.body.toLowerCase().matchAll(/@[^\s]+/g)].forEach(mention => {
+		[...this.kweet.body.matchAll(/@[^\s]+/g)].forEach(mention => {
 			mentions.push(mention[0]);
 		});
 		return mentions.indexOf(word) > -1;

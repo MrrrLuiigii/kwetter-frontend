@@ -51,7 +51,10 @@
 				Unfollow
 			</button>
 		</div>
-		<div class="container__bio">
+		<div
+			class="container__bio"
+			v-if="profile.bio.length || profile.trends.length"
+		>
 			<p>{{ profile.bio }}</p>
 			<div class="container__bio__trends">
 				<span

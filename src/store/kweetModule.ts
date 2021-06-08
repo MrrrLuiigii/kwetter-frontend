@@ -3,16 +3,22 @@ import { LikeVM } from "@/models/viewmodels/like.viewmodel";
 
 export const defaultState = {
 	skip: 0,
+	mentionSkip: 0,
 	take: 10,
 	count: 0,
-	kweets: []
+	mentionCount: 0,
+	kweets: [],
+	mentionKweets: []
 };
 
 const state = {
 	skip: 0,
+	mentionSkip: 0,
 	take: 10,
 	count: 0,
-	kweets: []
+	mentionCount: 0,
+	kweets: [],
+	mentionKweets: []
 };
 
 export default {
@@ -25,12 +31,25 @@ export default {
 			state.count = 0;
 			state.kweets = [];
 		},
+		RESET_MENTIONPAGINATION(state: any) {
+			state.mentionSkip = 0;
+			state.take = 10;
+			state.mentionCount = 0;
+			state.mentionKweets = [];
+		},
 		PAGE_UP(state: any) {
 			state.skip += state.take;
+		},
+		MENTIONPAGE_UP(state: any) {
+			state.mentionSkip += state.take;
 		},
 		SAVE_KWEETS(state: any, data: { data: KweetVM[]; count: number }) {
 			state.kweets = state.kweets.concat(data.data);
 			state.count = data.count;
+		},
+		SAVE_MENTIONKWEETS(state: any, data: { data: KweetVM[]; count: number }) {
+			state.mentionKweets = state.mentionKweets.concat(data.data);
+			state.mentionCount = data.count;
 		},
 		SET_LIKES(state: any, data: { likes: LikeVM[]; kweetId: string }) {
 			const kweet: KweetVM = state.kweets.find(
@@ -53,8 +72,22 @@ export default {
 		getPagination: (state: { skip: number; take: number; count: number }) => {
 			return { skip: state.skip, take: state.take, count: state.count };
 		},
+		getMentionPagination: (state: {
+			mentionSkip: number;
+			take: number;
+			mentionCount: number;
+		}) => {
+			return {
+				skip: state.mentionSkip,
+				take: state.take,
+				count: state.mentionCount
+			};
+		},
 		getKweets: (state: { kweets: KweetVM[] }) => {
 			return state.kweets;
+		},
+		getMentionKweets: (state: { mentionKweets: KweetVM[] }) => {
+			return state.mentionKweets;
 		}
 	},
 	actions: {
@@ -64,8 +97,20 @@ export default {
 		pageUp({ commit }: any) {
 			commit("PAGE_UP");
 		},
+		resetMentionPagination({ commit }: any) {
+			commit("RESET_MENTIONPAGINATION");
+		},
+		mentionPageUp({ commit }: any) {
+			commit("MENTIONPAGE_UP");
+		},
 		saveKweets({ commit }: any, data: { data: KweetVM[]; count: number }) {
 			commit("SAVE_KWEETS", data);
+		},
+		saveMentionKweets(
+			{ commit }: any,
+			data: { data: KweetVM[]; count: number }
+		) {
+			commit("SAVE_MENTIONKWEETS", data);
 		},
 		setLikes({ commit }: any, data: { likes: LikeVM[]; kweetId: string }) {
 			commit("SET_LIKES", data);
