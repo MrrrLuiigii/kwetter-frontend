@@ -200,7 +200,7 @@ export default class ProfileContainer extends Vue {
 	deleteProfile() {
 		this.showDeleteProfileModal = false;
 		ProfileService.deleteProfile(this.profileId).catch(err => {
-			console.log(err);
+			// console.log(err);
 		});
 	}
 }
