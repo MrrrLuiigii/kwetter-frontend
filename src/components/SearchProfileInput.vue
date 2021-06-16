@@ -63,7 +63,7 @@ export default class SearchProfileInput extends Vue {
 				this.options = res;
 			})
 			.catch((err: { message: string }) => {
-				this.error = err.message;
+				if (err && err.message) this.error = err.message;
 			});
 	}
 

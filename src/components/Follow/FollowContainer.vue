@@ -86,7 +86,7 @@ export default class FollowContainer extends Vue {
 				this.error = "";
 			})
 			.catch((err: { message: string }) => {
-				this.error = err.message;
+				if (err && err.message) this.error = err.message;
 			});
 	}
 

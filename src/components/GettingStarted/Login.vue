@@ -66,11 +66,12 @@ export default class Login extends Vue {
 						this.$router.replace({ name: "Home" });
 					})
 					.catch((err: { message: string }) => {
-						this.error = err.message;
+						if (err && err.message) this.error = err.message;
 					});
 			})
 			.catch((err: { message: string }) => {
-				this.error = err.message || "Whoops... Something went wrong...";
+				this.error =
+					(err && err.message) || "Whoops... Something went wrong...";
 			});
 	}
 }

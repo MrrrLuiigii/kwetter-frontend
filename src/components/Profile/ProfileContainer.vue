@@ -161,7 +161,7 @@ export default class ProfileContainer extends Vue {
 				this.isFollowing = res;
 			})
 			.catch((err: { message: string }) => {
-				this.error = err.message;
+				if (err && err.message) this.error = err.message;
 			});
 	}
 
@@ -172,7 +172,7 @@ export default class ProfileContainer extends Vue {
 				this.getIsFollowing();
 			})
 			.catch((err: { message: string }) => {
-				this.error = err.message;
+				if (err && err.message) this.error = err.message;
 			});
 	}
 
@@ -183,7 +183,7 @@ export default class ProfileContainer extends Vue {
 				this.getIsFollowing();
 			})
 			.catch((err: { message: string }) => {
-				this.error = err.message;
+				if (err && err.message) this.error = err.message;
 			});
 	}
 

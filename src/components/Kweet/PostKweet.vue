@@ -145,7 +145,7 @@ export default class PostKweet extends Vue {
 				bodyDiv.innerHTML = "";
 			})
 			.catch((err: { message: string }) => {
-				this.error = err.message;
+				if (err && err.message) this.error = err.message;
 			});
 	}
 }

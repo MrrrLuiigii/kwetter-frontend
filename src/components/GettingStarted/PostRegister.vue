@@ -137,8 +137,10 @@ export default class PostRegister extends Vue {
 				this.$router.replace({ name: "Home" });
 			})
 			.catch((err: { message: string }) => {
-				if (Array.isArray(err.message)) return (this.error = err.message[0]);
-				this.error = err.message;
+				if (err && err.message) {
+					if (Array.isArray(err.message)) return (this.error = err.message[0]);
+					this.error = err.message;
+				}
 			});
 	}
 }

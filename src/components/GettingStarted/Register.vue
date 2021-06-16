@@ -82,8 +82,10 @@ export default class Register extends Vue {
 				this.$emit("registered", this.registerRequest.username);
 			})
 			.catch((err: { message: string }) => {
-				if (Array.isArray(err.message)) return (this.error = err.message[0]);
-				this.error = err.message;
+				if (err && err.message) {
+					if (Array.isArray(err.message)) return (this.error = err.message[0]);
+					this.error = err.message;
+				}
 			});
 	}
 }
