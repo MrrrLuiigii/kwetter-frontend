@@ -49,7 +49,7 @@
 					<fa-icon
 						v-else
 						@click="likeKweet"
-						class="kweet__like__heart unliked"
+						class="kweet__actions__like__heart unliked"
 						:icon="['fas', 'heart']"
 					/>
 				</div>
